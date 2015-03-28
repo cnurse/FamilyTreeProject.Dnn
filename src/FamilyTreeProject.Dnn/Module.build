@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <WebsitePath>C:\GitHub\Dnn\Dnn.Platform75\Website</WebsitePath>
+    <WebsiteBinPath>$(WebsitePath)\bin</WebsiteBinPath>
+    <ModuleFolderName>$(WebsitePath)\DesktopModules\MVC\FamilyTreeProject</ModuleFolderName>
+  </PropertyGroup>
+  <Target Name="AfterBuild" DependsOnTargets="CopyBin;GetFiles;DebugProject;">
+  </Target>
+  <Target Name="GetFiles">
+    <ItemGroup>
+      <ResourceFiles Include="App_LocalResources/*.resx" />
+      <Images Include="Images/*.*" />
+      <JsFiles Include="js/*.*" />
+      <MVCViews Include="Views/*/*.cshtml;Views/*.cshtml"/>
+    </ItemGroup>
+  </Target>
+  <Target Name="CopyBin">
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\$(AssemblyName).dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\$(AssemblyName).pdb" DestinationFolder="$(WebsiteBinPath)" />
+  </Target>
+  <Target Name="DebugProject" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(ModuleFolderName)\App_LocalResources" />
+    <Copy SourceFiles="@(Images)" DestinationFolder="$(ModuleFolderName)\Images" />
+    <Copy SourceFiles="@(JsFiles)" DestinationFolder="$(ModuleFolderName)\js" />
+    <Copy SourceFiles="@(MVCViews)" DestinationFolder="$(ModuleFolderName)\Views\%(RecursiveDir)" />
+  </Target>
+</Project>
