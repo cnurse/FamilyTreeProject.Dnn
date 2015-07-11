@@ -1,28 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <WebsitePath>C:\GitHub\Dnn\Dnn.Platform75\Website</WebsitePath>
+    <BuildScriptsPath>$(MSBuildProjectDirectory)\..\..\Build</BuildScriptsPath>
+    <WebsitePath>C:\Websites\DNN_Platform8</WebsitePath>
     <WebsiteBinPath>$(WebsitePath)\bin</WebsiteBinPath>
-    <ModuleFolderName>$(WebsitePath)\DesktopModules\MVC\FamilyTreeProject</ModuleFolderName>
+    <WebsiteInstallPath>$(WebsitePath)\Install\Module</WebsiteInstallPath>
+    <Extension>zip</Extension>
+    <DNNFileName>FamilyTreeProject</DNNFileName>
+    <PackageName>FamilyTreeProject</PackageName>
+    <ModuleFolderName>$(WebsitePath)\DesktopModules\FTP\FamilyTreeProject</ModuleFolderName>
   </PropertyGroup>
-  <Target Name="AfterBuild" DependsOnTargets="CopyBin;GetFiles;DebugProject;">
-  </Target>
-  <Target Name="GetFiles">
-    <ItemGroup>
-      <ResourceFiles Include="App_LocalResources/*.resx" />
-      <Images Include="Images/*.*" />
-      <JsFiles Include="js/*.*" />
-      <MVCViews Include="Views/*/*.cshtml;Views/*.cshtml"/>
-    </ItemGroup>
-  </Target>
+  <Import Project="$(BuildScriptsPath)\Package.Targets" />
+  <Import Project="$(BuildScriptsPath)\Module.Build"/>
   <Target Name="CopyBin">
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\$(AssemblyName).dll" DestinationFolder="$(WebsiteBinPath)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\$(AssemblyName).pdb" DestinationFolder="$(WebsiteBinPath)" />
-  </Target>
-  <Target Name="DebugProject" Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <Copy SourceFiles="@(ResourceFiles)" DestinationFolder="$(ModuleFolderName)\App_LocalResources" />
-    <Copy SourceFiles="@(Images)" DestinationFolder="$(ModuleFolderName)\Images" />
-    <Copy SourceFiles="@(JsFiles)" DestinationFolder="$(ModuleFolderName)\js" />
-    <Copy SourceFiles="@(MVCViews)" DestinationFolder="$(ModuleFolderName)\Views\%(RecursiveDir)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\FamilyTreeProject.Core.dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\FamilyTreeProject.DomainServices.dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Naif.Core.dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Naif.Data.dll" DestinationFolder="$(WebsiteBinPath)" />
   </Target>
 </Project>

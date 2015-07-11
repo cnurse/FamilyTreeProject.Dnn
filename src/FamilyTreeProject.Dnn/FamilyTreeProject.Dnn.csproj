@@ -19,6 +19,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +39,28 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="DotNetNuke">
+      <HintPath>..\..\Externals\DotNetNuke.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetNuke.Web">
+      <HintPath>..\..\Externals\DotNetNuke.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Naif.Core, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Naif.Core.1.3.0\lib\Naif.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PetaPoco">
+      <HintPath>..\..\Externals\PetaPoco.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.1.1\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -48,6 +70,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.1.1\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -69,24 +95,77 @@
     <Reference Include="System.Web.Helpers">
       <HintPath>..\..\..\..\..\..\ProgramData\NuGet\Config\VisualStudio\14.0\Microsoft.AspNet.Webpages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure">
-      <HintPath>..\..\..\..\..\..\ProgramData\NuGet\Config\VisualStudio\14.0\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Mvc">
       <HintPath>..\..\..\..\..\..\ProgramData\NuGet\Config\VisualStudio\14.0\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DnnCacheProvider.cs" />
+    <Compile Include="Data\DnnRepository.cs" />
+    <Compile Include="Data\DnnUnitOfWork.cs" />
+    <Compile Include="Common\Util.cs" />
+    <Compile Include="Data\FluentColumnMap.cs" />
+    <Compile Include="Data\FluentMapper.cs" />
+    <Compile Include="Data\FluentMapperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\BaseController.cs" />
+    <Compile Include="Services\FamilyController.cs" />
+    <Compile Include="Services\IndividualController.cs" />
+    <Compile Include="Services\ServiceRouteMapper.cs" />
+    <Compile Include="Services\TreeController.cs" />
+    <Compile Include="ViewModels\FamilyViewModel.cs" />
+    <Compile Include="ViewModels\IndividualViewModel.cs" />
+    <Compile Include="ViewModels\TreeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_LocalResources\" />
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-    <Folder Include="Views\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Module.build" />
+    <Content Include="FamilyTreeProject.html" />
+    <Content Include="ClientScripts\FamilyTreeProject.js" />
+    <Content Include="license.txt" />
+    <Content Include="Module.build">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="module.css" />
+    <Content Include="releaseNotes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FamilyTreeProject.dnn">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Build.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\FamilyTreeProject.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\FamilyTreeProject.Core.csproj">
+      <Project>{ba58d9f1-31a6-4bde-9396-0aba7ee082d9}</Project>
+      <Name>FamilyTreeProject.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FamilyTreeProject.DomainServices\src\FamilyTreeProject.DomainServices\FamilyTreeProject.DomainServices.csproj">
+      <Project>{e7dd730e-9459-46db-b370-f126cac956e3}</Project>
+      <Name>FamilyTreeProject.DomainServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Naif.Data\src\Naif.Data\Naif.Data.csproj">
+      <Project>{da9a84cb-368e-489e-97d6-29345f3666bb}</Project>
+      <Name>Naif.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -115,4 +194,3 @@
   </ProjectExtensions>
   <Import Project="Module.build" />
 </Project>
-
