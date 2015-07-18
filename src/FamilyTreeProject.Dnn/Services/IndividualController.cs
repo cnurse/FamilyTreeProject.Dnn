@@ -21,34 +21,21 @@ namespace FamilyTreeProject.Dnn.Services
 
         public IndividualController()
         {
-            _individualService = new IndividualService(Util.CreateUnitOfWork());
+            var cache = Util.CreateCacheProvider();
+            var unitOfWork = Util.CreateUnitOfWork(cache);
+            _individualService = new IndividualService(unitOfWork, cache);
         }
 
         public HttpResponseMessage GetIndividual(int treeId, int id, int includeAncestors = 0, int includeDescendants = 0, bool includeSpouses = false)
         {
-            var settings = new IndividualServiceSettings
-                                {
-                                    TreeId = treeId,
-                                    IncludeChildren = (includeDescendants > 0),
-                                    IncludeParents = (includeAncestors > 0),
-                                    IncludeSpouses = true
-                                };
-
-            return GetEntity(() => _individualService.GetIndividual( id, settings)
+            return GetEntity(() => _individualService.GetIndividual( id, treeId)
                                     , ind => new IndividualViewModel(ind, includeAncestors, includeDescendants, includeSpouses));
         }
 
         public HttpResponseMessage GetIndividuals(int treeId, int includeAncestors = 0, int includeDescendants = 0, bool includeSpouses = false)
         {
-            var settings = new IndividualServiceSettings
-                                {
-                                    TreeId = treeId,
-                                    IncludeChildren = (includeDescendants > 0),
-                                    IncludeParents = (includeAncestors > 0),
-                                    IncludeSpouses = true
-                                };
 
-            return GetEntities(() => _individualService.GetIndividuals(settings)
+            return GetEntities(() => _individualService.GetIndividuals(treeId)
                                     , ind => new IndividualViewModel(ind, includeAncestors, includeDescendants, includeSpouses));
         }
     }

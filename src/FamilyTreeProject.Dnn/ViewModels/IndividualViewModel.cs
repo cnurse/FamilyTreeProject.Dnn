@@ -41,10 +41,13 @@ namespace FamilyTreeProject.Dnn.ViewModels
                 }
             }
 
-            Spouses = new List<IndividualViewModel>();
-            foreach (var spouse in individual.Spouses)
+            if (includeSpouses)
             {
-                Spouses.Add(new IndividualViewModel(spouse, includeAncestors, 0, false));
+                Spouses = new List<IndividualViewModel>();
+                foreach (var spouse in individual.Spouses)
+                {
+                    Spouses.Add(new IndividualViewModel(spouse, includeAncestors, 0, false));
+                }
             }
         }
 

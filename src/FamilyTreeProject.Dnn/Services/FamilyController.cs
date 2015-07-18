@@ -19,7 +19,7 @@ namespace FamilyTreeProject.Dnn.Services
 
         public FamilyController()
         {
-            _familyService = new FamilyService(Util.CreateUnitOfWork());
+            _familyService = new FamilyService(Util.CreateUnitOfWork(new DnnCacheProvider()));
         }
 
         public HttpResponseMessage GetFamilies(int treeId)

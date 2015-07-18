@@ -21,7 +21,7 @@ namespace FamilyTreeProject.Dnn.Services
 
         public TreeController()
         {
-            _treeService = new TreeService(Util.CreateUnitOfWork());
+            _treeService = new TreeService(Util.CreateUnitOfWork(new DnnCacheProvider()));
         }
 
         public HttpResponseMessage GetTrees()

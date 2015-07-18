@@ -26,7 +26,7 @@ namespace FamilyTreeProject.Dnn.Services
                 success = true,
                 data = new
                     {
-                        results = entity,
+                        results = viewModel,
                     }
                 };
 
