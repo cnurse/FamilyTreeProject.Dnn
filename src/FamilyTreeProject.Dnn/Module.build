@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <BuildScriptsPath>$(MSBuildProjectDirectory)\..\..\Build</BuildScriptsPath>
-    <WebsitePath>C:\Websites\DNN_Platform8</WebsitePath>
+    <WebsitePath>C:\Websites\DNN_Platform_8_FamilyTree</WebsitePath>
     <WebsiteBinPath>$(WebsitePath)\bin</WebsiteBinPath>
     <WebsiteInstallPath>$(WebsitePath)\Install\Module</WebsiteInstallPath>
     <Extension>zip</Extension>

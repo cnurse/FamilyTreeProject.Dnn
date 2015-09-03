@@ -6,11 +6,14 @@
 //                                         *
 // *****************************************
 
+using System;
+using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using FamilyTreeProject.Dnn.Common;
 using FamilyTreeProject.Dnn.ViewModels;
 using FamilyTreeProject.DomainServices;
+using Naif.Core.Collections;
 
 namespace FamilyTreeProject.Dnn.Services
 {
@@ -18,25 +21,32 @@ namespace FamilyTreeProject.Dnn.Services
     public class IndividualController : BaseController
     {
         private readonly IIndividualService _individualService;
+        private readonly IFactService _factService;
 
         public IndividualController()
         {
             var cache = Util.CreateCacheProvider();
             var unitOfWork = Util.CreateUnitOfWork(cache);
-            _individualService = new IndividualService(unitOfWork, cache);
+            var serviceFactory = new FamilyTreeServiceFactory(unitOfWork, cache);
+            _individualService = serviceFactory.CreateIndividualService();
+            _factService = serviceFactory.CreateFactService();
         }
 
+        [HttpGet]
         public HttpResponseMessage GetIndividual(int treeId, int id, int includeAncestors = 0, int includeDescendants = 0, bool includeSpouses = false)
         {
-            return GetEntity(() => _individualService.GetIndividual( id, treeId)
-                                    , ind => new IndividualViewModel(ind, includeAncestors, includeDescendants, includeSpouses));
+            return GetEntity(() => _individualService.Get( id, treeId)
+                                    , ind => new IndividualViewModel(ind, _factService, includeAncestors, includeDescendants, includeSpouses));
         }
 
-        public HttpResponseMessage GetIndividuals(int treeId, int includeAncestors = 0, int includeDescendants = 0, bool includeSpouses = false)
+        [HttpGet]
+        public HttpResponseMessage GetIndividuals(int treeId, string searchTerm, int pageIndex, int pageSize)
         {
+            Func<Individual, bool> predicate = (ind => (String.IsNullOrEmpty(searchTerm)) || ind.Name.ToLowerInvariant().Contains(searchTerm.ToLowerInvariant()));
 
-            return GetEntities(() => _individualService.GetIndividuals(treeId)
-                                    , ind => new IndividualViewModel(ind, includeAncestors, includeDescendants, includeSpouses));
+            Func<IPagedList<Individual>> getIndividuals = (() => _individualService.Get(treeId, predicate, pageIndex, pageSize));
+
+            return GetPage(getIndividuals, ind => new IndividualViewModel(ind, _factService, 0, 0, false));
         }
     }
 }

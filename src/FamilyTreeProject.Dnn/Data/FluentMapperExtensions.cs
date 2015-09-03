@@ -6,8 +6,8 @@
 //                                         *
 // *****************************************
 
-// Influenced by htTProperty://sameproblemmorecode.blogspot.nl/2013/07/petapoco-as-its-meant-to-be-with.html
-// htTPropertys://github.com/luuksommers/PetaPoco
+// Influenced by http://sameproblemmorecode.blogspot.nl/2013/07/petapoco-as-its-meant-to-be-with.html
+// https://github.com/luuksommers/PetaPoco
 
 using System;
 using System.Linq.Expressions;

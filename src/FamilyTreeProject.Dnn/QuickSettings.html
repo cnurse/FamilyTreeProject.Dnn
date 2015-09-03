@@ -1,0 +1,37 @@
+﻿[JavaScript:{ path: "~/DesktopModules/Ftp/FamilyTreeProject/ClientScripts/quickSettings.js"}]
+
+
+<div id="FTP-QS-[ModuleContext:ModuleId]" class="dnnForm">
+    <div class="dnnFormMessage dnnFormInfo">
+        [Resx: {key : "QuickSettings" }]
+    </div>
+    <div class="dnnFormItem">
+        <div>[Resx: { key: "Owner" }]</div>
+        <div>
+            <input type="radio" name="owner" value="module" data-bind="checked: owner"/>[Resx: { key: "Module" }]
+            <input type="radio" name="owner" value="user" data-bind="checked: owner" />[Resx: { key: "User" }]
+        </div>
+    </div>
+</div>
+
+<script language="javascript" type="text/javascript">
+    (function ($) {
+        var moduleId = parseInt("[ModuleContext:ModuleId]");
+
+        $(document).ready(function($) {
+            var resx = {
+
+            };
+
+            var options = {
+                moduleId: moduleId,
+                servicesFramework: $.ServicesFramework(moduleId),
+                baseServicepath: "FTP/FamilyTreeProject"
+            };
+
+            var quickSettings = new ftp.QuickSettings($, ko, options, resx);
+
+            quickSettings.init("#FTP-QS-" + moduleId);
+        });
+    })(jQuery);
+</script>

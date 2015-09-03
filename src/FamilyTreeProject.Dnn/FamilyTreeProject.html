@@ -1,10 +1,57 @@
-﻿[JavaScript:{ jsname: "Knockout" }]
-[JavaScript:{ jsname: "Knockout.Mapping" }]
-[JavaScript:{ path: "~/DesktopModules/Ftp/FamilyTreeProject/ClientScripts/FamilyTreeProject.js"}]
-[Css:{ path: "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"}]
+﻿[JavaScript:{ jsname: "jQuery" }]
+[JavaScript:{ jsname: "Knockout" }]
+
+[JavaScript:{ path: "~/DesktopModules/Ftp/FamilyTreeProject/ClientScripts/familyTreeProject.js"}]
+[JavaScript:{ path: "~/DesktopModules/Ftp/FamilyTreeProject/ClientScripts/ko.componentLoader.js"}]
+[JavaScript:{ path: "~/Resources/Shared/scripts/dnn.utility.js"}]
+
 
 <div id="FTP-[ModuleContext:ModuleId]" class="ftpContainer">
+    <div class="ftpHeading">
+        <div>[Resx:{key:"Heading"}]</div>
+        <div data-bind="visible: trees().length > 0">
+            <div class="ftpLabel">[Resx: {key:"Tree"}]</div>
+            <div>
+                <span data-bind="text: treeName, visible: trees().length < 3"></span>
+                <select data-bind="options: trees, optionsText: 'name', optionsValue: 'treeId', value: treeId, visible: trees().length > 2"></select>
+            </div>
+        </div>
+        <div>
+            <a class="ftpIcon"><i class="fa fa-home"></i></a>
+        </div>
+    </div>
+    <div id="ftpGettingStarted" data-bind="visible: trees().length <= 1">
+        <div>
+            <div class="dnnFormInfo dnnFormMessage">[Resx:{key:"GettingStartedMessage"}]</div>
+        </div>
+    </div>
+    <div class="ftpBody" data-bind="visible: treeId() > 0">
+        <div class="ftpMenu">
+            <ul>
+                <li id="tree-menu" panel-template="TreeOverView" data-bind="click: selectTreeOverview">
+                    <div>[Resx:{key:"TreeOverView"}]</div>
+                </li>
+                <li id="individuals-menu" panel-template="IndividualList" data-bind="click: selectIndividualList">
+                    <div>[Resx:{key:"IndividualList"}]</div>
+                </li>
+                <li id="familyGroup-menu" panel-template="FamilyGroupView" data-bind="click: selectFamilyGroupView">
+                    <div>[Resx:{key:"FamilyGroupView"}]</div>
+                </li>
+                <li id="ancestor-menu" panel-template="AncestorView" data-bind="click: selectAncestorView">
+                    <div>[Resx:{key:"AncestorView"}]</div>
+                </li>
+            </ul>
+        </div>
 
+        <div id="ftp-panels">
+            <div data-bind="component : {name : 'individualList' }"></div>
+
+        </div>
+
+        <div id="loadingbar" style="display: none;">
+            <div></div>
+        </div>
+    </div>
 </div>
 
 <script language="javascript" type="text/javascript">
@@ -12,10 +59,23 @@
 
     jQuery(document).ready(function ($) {
         var localizedSettings = {
+            findIndividual: '[Resx:{key:"FindIndividual"}]',
+            individuals_NoPagerFormat: '[Resx:{key:"Individuals_NoPagerFormat"}]',
+            individuals_PagerFormat: '[Resx:{key:"Individuals_PagerFormat"}]',
+            pager_PageDesc: '[Resx:{key:"Pager_PageDesc"}]',
+            individualsPageSize: '[Resx:{key:"IndividualsPageSize"}]',
+            selectTree: '[Resx:{key:"SelectTree"}]'
         };
 
         var settings = {
-            servicesFramework: $.ServicesFramework(moduleId)
+            basePath: "DesktopModules/FTP/FamilyTreeProject",
+            pageSize: 10,
+            servicesFramework: $.ServicesFramework(moduleId),
+            loadingBarId: '#loadingbar',
+            servicePath: "FTP/FamilyTreeProject",
+            initialPanel:'#individuals-panel',
+            individualListPanel: '#individuals-panel',
+            familyGroupViewPanel: '#familyGroup-panel'
         }
 
         var familyTreeProject = new ftp.FamilyTreeProject($, ko, settings, localizedSettings);

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using DotNetNuke.Web.Api;
+using Naif.Core.Collections;
 
 namespace FamilyTreeProject.Dnn.Services
 {
@@ -53,5 +54,35 @@ namespace FamilyTreeProject.Dnn.Services
 
             return Request.CreateResponse(response);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TViewModel"></typeparam>
+        /// <param name="getEntities"></param>
+        /// <param name="getViewModel"></param>
+        /// <returns></returns>
+        protected HttpResponseMessage GetPage<TEntity, TViewModel>(Func<IPagedList<TEntity>> getEntities, Func<TEntity, TViewModel> getViewModel)
+        {
+            var entityList = getEntities();
+            var viewModels = entityList
+                // ReSharper disable once ConvertClosureToMethodGroup
+                                .Select(entity => getViewModel(entity))
+                                .ToList();
+
+            var response = new
+                            {
+                                success = true,
+                                data = new
+                                        {
+                                            results = viewModels,
+                                            totalResults = entityList.TotalCount
+                                        }
+                            };
+
+            return Request.CreateResponse(response);
+        }
+
     }
 }

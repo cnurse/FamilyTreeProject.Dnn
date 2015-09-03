@@ -13,13 +13,14 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FamilyTreeProject.Dnn</RootNamespace>
     <AssemblyName>FamilyTreeProject.Dnn</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,6 +57,7 @@
     <Reference Include="PetaPoco">
       <HintPath>..\..\Externals\PetaPoco.dll</HintPath>
     </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.1.1\lib\net45\System.Net.Http.Formatting.dll</HintPath>
@@ -67,20 +69,18 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.1.1\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Webpages">
@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DnnCacheProvider.cs" />
+    <Compile Include="Common\OwnerType.cs" />
     <Compile Include="Data\DnnRepository.cs" />
     <Compile Include="Data\DnnUnitOfWork.cs" />
     <Compile Include="Common\Util.cs" />
@@ -112,23 +113,42 @@
     <Compile Include="Services\FamilyController.cs" />
     <Compile Include="Services\IndividualController.cs" />
     <Compile Include="Services\ServiceRouteMapper.cs" />
+    <Compile Include="Services\SettingsController.cs" />
     <Compile Include="Services\TreeController.cs" />
     <Compile Include="ViewModels\FamilyViewModel.cs" />
     <Compile Include="ViewModels\IndividualViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\TreeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="components\ancestorView\ancestorView.js" />
+    <Content Include="ClientScripts\individual.js" />
+    <Content Include="ClientScripts\individualList.js" />
+    <Content Include="ClientScripts\quickSettings.js" />
+    <Content Include="components\ancestorView\ancestorView.css" />
+    <Content Include="components\individualList\individualList.css" />
+    <Content Include="components\individualList\individualList.js" />
+    <Content Include="components\individualList\main.js" />
+    <Content Include="css\individualList.css" />
+    <Content Include="Data\01.00.00.sql" />
     <Content Include="FamilyTreeProject.html" />
-    <Content Include="ClientScripts\FamilyTreeProject.js" />
+    <Content Include="ClientScripts\familyTreeProject.js" />
+    <Content Include="Images\left.png" />
+    <Content Include="Images\right.png" />
+    <Content Include="Images\search.png" />
     <Content Include="license.txt" />
     <Content Include="Module.build">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="module.css" />
+    <Content Include="module.css">
+      <DependentUpon>module.less</DependentUpon>
+    </Content>
+    <Content Include="QuickSettings.html" />
     <Content Include="releaseNotes.txt" />
+    <Content Include="components\ancestorView\ancestorView.html" />
+    <Content Include="Views\FamilyGroup.html" />
+    <Content Include="components\individualList\individualList.html" />
+    <Content Include="Views\TreeOverView.html" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="FamilyTreeProject.dnn">
@@ -145,13 +165,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="web.config" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
+    <Content Include="module.less" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\FamilyTreeProject.Core.csproj">
@@ -159,13 +173,25 @@
       <Name>FamilyTreeProject.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FamilyTreeProject.DomainServices\src\FamilyTreeProject.DomainServices\FamilyTreeProject.DomainServices.csproj">
-      <Project>{e7dd730e-9459-46db-b370-f126cac956e3}</Project>
+      <Project>{2baa8950-fd2a-4cbb-b938-7db939d108ec}</Project>
       <Name>FamilyTreeProject.DomainServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Naif.Data\src\Naif.Data\Naif.Data.csproj">
       <Project>{da9a84cb-368e-489e-97d6-29345f3666bb}</Project>
       <Name>Naif.Data</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="compilerconfig.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_LocalResources\QuickSettings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="css\familyTreeProject.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClientScripts\ko.componentLoader.js" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

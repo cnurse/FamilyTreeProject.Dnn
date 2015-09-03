@@ -117,58 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Actions.Text" xml:space="preserve">
-    <value>Actions</value>
+  <data name="Module.Text" xml:space="preserve">
+    <value>Module</value>
   </data>
-  <data name="AddIndividual.Text" xml:space="preserve">
-    <value>Add Individual</value>
+  <data name="Owner.Text" xml:space="preserve">
+    <value>Owner</value>
   </data>
-  <data name="AncestorView.Text" xml:space="preserve">
-    <value>Ancestor View</value>
+  <data name="QuickSettings.Text" xml:space="preserve">
+    <value>You can choose how the module behaves.  If you select Module then all users will see the same set of Family Trees.  If you choose User then each authorized user will see their own trees.</value>
   </data>
-  <data name="Birth.Text" xml:space="preserve">
-    <value>Birth</value>
-  </data>
-  <data name="Death.Text" xml:space="preserve">
-    <value>Death</value>
-  </data>
-  <data name="FamilyGroupView.Text" xml:space="preserve">
-    <value>Family Group View</value>
-  </data>
-  <data name="FindIndividual.Text" xml:space="preserve">
-    <value>Find Individual</value>
-  </data>
-  <data name="GettingStartedMessage.Text" xml:space="preserve">
-    <value>You don't have any Trees yet. You can either create one or upload a GEDCOM file you have exported from another application.</value>
-  </data>
-  <data name="Heading.Text" xml:space="preserve">
-    <value>Family Tree Project</value>
-  </data>
-  <data name="IndividualList.Text" xml:space="preserve">
-    <value>Individual List</value>
-  </data>
-  <data name="IndividualsPageSize.Text" xml:space="preserve">
-    <value>Individuals per page</value>
-  </data>
-  <data name="Individuals_NoPagerFormat.Text" xml:space="preserve">
-    <value>Showing {0} Individuals</value>
-  </data>
-  <data name="Individuals_PagerFormat.Text" xml:space="preserve">
-    <value>Showing {0}-{1} of {2} Individuals</value>
-  </data>
-  <data name="Name.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Pager_PageDesc.Text" xml:space="preserve">
-    <value>Page {0} of {1}</value>
-  </data>
-  <data name="SelectTree.Text" xml:space="preserve">
-    <value>Select a Tree</value>
-  </data>
-  <data name="Tree.Text" xml:space="preserve">
-    <value>Tree</value>
-  </data>
-  <data name="TreeOverView.Text" xml:space="preserve">
-    <value>Tree Overview</value>
+  <data name="User.Text" xml:space="preserve">
+    <value>User</value>
   </data>
 </root>
