@@ -17,7 +17,11 @@
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\$(AssemblyName).pdb" DestinationFolder="$(WebsiteBinPath)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\FamilyTreeProject.Core.dll" DestinationFolder="$(WebsiteBinPath)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\FamilyTreeProject.DomainServices.dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\FamilyTreeProject.Data.GEDCOM.dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\FamilyTreeProject.GEDCOM.dll" DestinationFolder="$(WebsiteBinPath)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Naif.Core.dll" DestinationFolder="$(WebsiteBinPath)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\Naif.Data.dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\PCLStorage.Abstractions.dll" DestinationFolder="$(WebsiteBinPath)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\bin\PCLStorage.dll" DestinationFolder="$(WebsiteBinPath)" />
   </Target>
 </Project>

@@ -43,6 +43,9 @@
     <Reference Include="DotNetNuke">
       <HintPath>..\..\Externals\DotNetNuke.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetNuke.Instrumentation">
+      <HintPath>..\..\Externals\DotNetNuke.Instrumentation.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetNuke.Web">
       <HintPath>..\..\Externals\DotNetNuke.Web.dll</HintPath>
     </Reference>
@@ -52,6 +55,14 @@
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PCLStorage, Version=1.0.2.0, Culture=neutral, PublicKeyToken=286fe515a2c35b64, processorArchitecture=MSIL">
+      <HintPath>..\..\..\FamilyTreeProject\packages\PCLStorage.1.0.2\lib\net45\PCLStorage.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PCLStorage.Abstractions, Version=1.0.2.0, Culture=neutral, PublicKeyToken=286fe515a2c35b64, processorArchitecture=MSIL">
+      <HintPath>..\..\..\FamilyTreeProject\packages\PCLStorage.1.0.2\lib\net45\PCLStorage.Abstractions.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="PetaPoco">
@@ -108,22 +119,55 @@
     <Compile Include="Data\FluentColumnMap.cs" />
     <Compile Include="Data\FluentMapper.cs" />
     <Compile Include="Data\FluentMapperExtensions.cs" />
+    <Compile Include="Data\GEDCOMImporter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\BaseController.cs" />
     <Compile Include="Services\FamilyController.cs" />
+    <Compile Include="Services\FileController.cs" />
     <Compile Include="Services\IndividualController.cs" />
     <Compile Include="Services\ServiceRouteMapper.cs" />
     <Compile Include="Services\SettingsController.cs" />
     <Compile Include="Services\TreeController.cs" />
     <Compile Include="ViewModels\FamilyViewModel.cs" />
+    <Compile Include="ViewModels\FileUploadViewModel.cs" />
     <Compile Include="ViewModels\IndividualViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\TreeViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ClientScripts\components\ancestorsView\ancestorsView.html" />
+    <Content Include="ClientScripts\components\ancestorsView\ancestorsView.js" />
+    <Content Include="ClientScripts\components\editTree\editTree.html" />
+    <Content Include="ClientScripts\components\editTree\editTree.js" />
+    <Content Include="ClientScripts\components\familyGroupView\familyGroupView.html" />
+    <Content Include="ClientScripts\components\familyGroupView\familyGroupView.js" />
+    <Content Include="ClientScripts\components\uploadFile\uploadFile.html" />
+    <Content Include="ClientScripts\components\uploadFile\uploadFile.js" />
+    <Content Include="ClientScripts\knockout-jqueryui\bindingHandler.js" />
+    <Content Include="ClientScripts\knockout-jqueryui\dialog.js" />
+    <Content Include="ClientScripts\knockout-jqueryui\knockout-jqueryui.min.js" />
+    <Content Include="ClientScripts\knockout-jqueryui\utils.js" />
+    <Content Include="ClientScripts\components\individualList\individualList.html" />
+    <Content Include="ClientScripts\components\individualList\individualList.js" />
+    <Content Include="ClientScripts\components\pager\pager.html" />
+    <Content Include="ClientScripts\components\pager\pager.js" />
+    <Content Include="ClientScripts\components\treeSelector\treeSelector.html" />
+    <Content Include="ClientScripts\components\treeSelector\treeSelector.js" />
+    <Content Include="ClientScripts\components\treeView\treeView.html" />
+    <Content Include="ClientScripts\components\treeView\treeView.js" />
+    <Content Include="ClientScripts\components\viewSelector\viewSelector.html" />
+    <Content Include="ClientScripts\components\viewSelector\viewSelector.js" />
+    <Content Include="ClientScripts\modules\config.js" />
+    <Content Include="ClientScripts\curl\curl.js" />
+    <Content Include="ClientScripts\curl\domReady.js" />
+    <Content Include="ClientScripts\curl\plugin\domReady.js" />
+    <Content Include="ClientScripts\curl\plugin\js.js" />
+    <Content Include="ClientScripts\curl\plugin\text.js" />
+    <Content Include="ClientScripts\curl\plugin\_fetchText.js" />
+    <Content Include="ClientScripts\modules\jquery.js" />
+    <Content Include="ClientScripts\modules\knockout.js" />
     <Content Include="components\ancestorView\ancestorView.js" />
     <Content Include="ClientScripts\individual.js" />
-    <Content Include="ClientScripts\individualList.js" />
     <Content Include="ClientScripts\quickSettings.js" />
     <Content Include="components\ancestorView\ancestorView.css" />
     <Content Include="components\individualList\individualList.css" />
@@ -159,7 +203,9 @@
     <Content Include="Build.bat" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\FamilyTreeProject.resx" />
+    <Content Include="App_LocalResources\FamilyTreeProject.resx">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -171,6 +217,10 @@
     <ProjectReference Include="..\..\..\FamilyTreeProject.Core\src\FamilyTreeProject.Core\FamilyTreeProject.Core.csproj">
       <Project>{ba58d9f1-31a6-4bde-9396-0aba7ee082d9}</Project>
       <Name>FamilyTreeProject.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\FamilyTreeProject.Data\src\FamilyTreeProject.Data.GEDCOM\FamilyTreeProject.Data.GEDCOM.csproj">
+      <Project>{4B904183-F155-42A3-8CFD-0D907BB10CDA}</Project>
+      <Name>FamilyTreeProject.Data.GEDCOM</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\FamilyTreeProject.DomainServices\src\FamilyTreeProject.DomainServices\FamilyTreeProject.DomainServices.csproj">
       <Project>{2baa8950-fd2a-4cbb-b938-7db939d108ec}</Project>
@@ -185,13 +235,21 @@
     <Content Include="compilerconfig.json" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_LocalResources\QuickSettings.resx" />
+    <Content Include="App_LocalResources\QuickSettings.resx">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\familyTreeProject.css" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ClientScripts\ko.componentLoader.js" />
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

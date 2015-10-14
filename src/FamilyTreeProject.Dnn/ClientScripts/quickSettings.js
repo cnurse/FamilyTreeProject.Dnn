@@ -6,10 +6,11 @@ ftp.QuickSettings = function ($, ko, options, resx) {
     var opts = $.extend({}, ftp.QuickSettings.defaultOptions, options);
     var $rootElement;
 
-    var util = ftp.utility(opts, resx);
-    util.settingsService = function () {
-        util.sf.serviceController = "Settings";
-        return util.sf;
+    var sf = dnn.sf();
+    sf.init(opts);
+    sf.settingsService = function () {
+        sf.serviceController = "Settings";
+        return sf;
     };
 
     var viewModel = {};
@@ -20,7 +21,7 @@ ftp.QuickSettings = function ($, ko, options, resx) {
         viewModel.owner = ko.observable("");
 
         viewModel.getSettings = function() {
-            util.settingsService().get("GetSettings", {},
+            sf.settingsService().get("GetSettings", {},
                 function(data) {
                     if (typeof data !== "undefined" && data != null && data.success === true) {
                         //Success
@@ -37,7 +38,7 @@ ftp.QuickSettings = function ($, ko, options, resx) {
                 owner: viewModel.owner()
             };
 
-            util.settingsService().post("SaveSettings", params,
+            sf.settingsService().post("SaveSettings", params,
                 function (data) {
                     if (data.success === true) {
                         //Success
@@ -62,8 +63,6 @@ ftp.QuickSettings = function ($, ko, options, resx) {
 
         viewModel.getSettings();
     }
-
-
 
     return {
         init: init

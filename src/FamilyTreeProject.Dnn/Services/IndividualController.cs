@@ -10,6 +10,7 @@ using System;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using FamilyTreeProject.Common;
 using FamilyTreeProject.Dnn.Common;
 using FamilyTreeProject.Dnn.ViewModels;
 using FamilyTreeProject.DomainServices;
@@ -32,11 +33,22 @@ namespace FamilyTreeProject.Dnn.Services
             _factService = serviceFactory.CreateFactService();
         }
 
+        private IndividualViewModel GetIndividualViewModel(Individual individual)
+        {
+            var ind = individual.Clone();
+            ind.Facts = _factService.Get(ind.TreeId, f => f.OwnerId == ind.Id && f.OwnerType == EntityType.Individual).ToList();
+
+            var individualViewModel = new IndividualViewModel(ind);
+
+            return individualViewModel;
+        }
+
         [HttpGet]
         public HttpResponseMessage GetIndividual(int treeId, int id, int includeAncestors = 0, int includeDescendants = 0, bool includeSpouses = false)
         {
             return GetEntity(() => _individualService.Get( id, treeId)
-                                    , ind => new IndividualViewModel(ind, _factService, includeAncestors, includeDescendants, includeSpouses));
+                                    // ReSharper disable once ConvertClosureToMethodGroup
+                                    , ind => GetIndividualViewModel(ind));
         }
 
         [HttpGet]
@@ -46,7 +58,8 @@ namespace FamilyTreeProject.Dnn.Services
 
             Func<IPagedList<Individual>> getIndividuals = (() => _individualService.Get(treeId, predicate, pageIndex, pageSize));
 
-            return GetPage(getIndividuals, ind => new IndividualViewModel(ind, _factService, 0, 0, false));
+            // ReSharper disable once ConvertClosureToMethodGroup
+            return GetPage(getIndividuals, ind => GetIndividualViewModel(ind));
         }
     }
 }

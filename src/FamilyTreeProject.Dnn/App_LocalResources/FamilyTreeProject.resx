@@ -162,13 +162,109 @@
   <data name="Pager_PageDesc.Text" xml:space="preserve">
     <value>Page {0} of {1}</value>
   </data>
-  <data name="SelectTree.Text" xml:space="preserve">
-    <value>Select a Tree</value>
-  </data>
   <data name="Tree.Text" xml:space="preserve">
     <value>Tree</value>
   </data>
   <data name="TreeOverView.Text" xml:space="preserve">
     <value>Tree Overview</value>
+  </data>
+  <data name="CreateTree.Text" xml:space="preserve">
+    <value>Create Tree</value>
+  </data>
+  <data name="UploadTree.Text" xml:space="preserve">
+    <value>Upload Tree</value>
+  </data>
+  <data name="MyFolder.Text" xml:space="preserve">
+    <value>My Folder</value>
+  </data>
+  <data name="UploadTo.Text" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="AlreadyExists.Text" xml:space="preserve">
+    <value>The file already exists</value>
+  </data>
+  <data name="ExtensionNotAllowed.Text" xml:space="preserve">
+    <value>This extension is not allowed.  Please contact your site administrator to allow the upload of GEDCOM(.ged) files</value>
+  </data>
+  <data name="CloseButtonText.Text" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="DragAndDropAreaTitle.Text" xml:space="preserve">
+    <value>Drag files here or click to browse</value>
+  </data>
+  <data name="emptyFileUpload.Text" xml:space="preserve">
+    <value>Your browser does not support empty file uploads</value>
+  </data>
+  <data name="errorDialogTitle.Text" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="FileAlreadyExists.Text" xml:space="preserve">
+    <value>This file already exists</value>
+  </data>
+  <data name="fileIsTooLarge.Text" xml:space="preserve">
+    <value>File size bigger than 28 Mb</value>
+  </data>
+  <data name="fileUploadCancelled.Text" xml:space="preserve">
+    <value>Upload cancelled</value>
+  </data>
+  <data name="fileUploaded.Text" xml:space="preserve">
+    <value>File uploaded</value>
+  </data>
+  <data name="fileUploadFailed.Text" xml:space="preserve">
+    <value>Upload failed</value>
+  </data>
+  <data name="KeepButtonText.Text" xml:space="preserve">
+    <value>Keep</value>
+  </data>
+  <data name="ReplaceButtonText.Text" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="tooManyFiles.Text" xml:space="preserve">
+    <value>You connot upload more than {0} file(s) at once.</value>
+  </data>
+  <data name="UploadFileMethod.Text" xml:space="preserve">
+    <value>Upload File</value>
+  </data>
+  <data name="UploadFromWebButtonText.Text" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="UploadFromWebMethod.Text" xml:space="preserve">
+    <value>From URL</value>
+  </data>
+  <data name="uploadStopped.Text" xml:space="preserve">
+    <value>File upload stopped</value>
+  </data>
+  <data name="urlTooltip.Text" xml:space="preserve">
+    <value>Enter Resource Url like http://SomeWebSite.com/Images/About.png</value>
+  </data>
+  <data name="CreateTreeMessage.Text" xml:space="preserve">
+    <value>To create a Family Tree give your tree a name, a short title and a description.  This information will displayed on the Tree View page.</value>
+  </data>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Title.Text" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="UploadTreeMessage.Text" xml:space="preserve">
+    <value>To upload a Family Tree to this site, export your Family Tree as a GEDCOM file from the system you are using today to manage your tree.  Ensure that the file has the extension ".ged".  When you upload the file the name of the file will be used as the Tree Name, although you can modify that later.</value>
+  </data>
+  <data name="UploadFile.Text" xml:space="preserve">
+    <value>Upload File</value>
+  </data>
+  <data name="HomePerson.Text" xml:space="preserve">
+    <value>Home Person</value>
+  </data>
+  <data name="LastViewed.Text" xml:space="preserve">
+    <value>Last Viewed Person</value>
+  </data>
+  <data name="Summary.Text" xml:space="preserve">
+    <value>Tree Summary</value>
+  </data>
+  <data name="Families.Text" xml:space="preserve">
+    <value>Families</value>
+  </data>
+  <data name="Individuals.Text" xml:space="preserve">
+    <value>Individuals</value>
   </data>
 </root>

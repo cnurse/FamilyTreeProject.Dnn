@@ -1,0 +1,38 @@
+﻿<div>
+    <div class="ftpLabel" data-bind="text: resx.tree"></div>
+    <div data-bind="visible: trees().length > 0">
+        <span data-bind="text: treeName, visible: trees().length == 1"></span>
+        <select data-bind="options: trees, optionsText: 'name', optionsValue: 'treeId', value: treeId, valueAllowUnset: true, visible: trees().length > 1"></select>
+    </div>
+    <div class="ftpButtons">
+        <a class="ftpButton" data-bind="text: resx.uploadTree, click: uploadTree"></a>
+        <a class="ftpButton" data-bind="text: resx.createTree, click: addTree"></a>
+    </div>
+</div>
+
+<!-- ko component: {
+        name: "editTree",
+        params: { treeId: -1,
+            isVisible: showCreate,
+            title: resx.createTree,
+            newTreeId: treeId ,
+            onSuccess: onTreeCreated
+        }
+    } -->
+<!-- /ko -->
+<!-- ko component: {
+        name: "uploadFile",
+        params: { treeId: -1,
+            isVisible: showUpload,
+            title: resx.uploadTree,
+            newTreeId: treeId ,
+            onSuccess: onTreeUploaded,
+            options: {
+                fileUploadMethod: 'Tree/UploadTree',
+                extensions: ['ged'],
+                width: 600,
+                height:550
+            }
+        }
+    } -->
+<!-- /ko -->

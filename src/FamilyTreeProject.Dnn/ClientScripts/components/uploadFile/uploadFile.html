@@ -1,0 +1,21 @@
+﻿<div id="uploadFilePanel" class="dnnForm" data-bind="dialog: {
+                                                        buttons: [{
+                                                            text: resx.cancel,
+                                                            click: cancel,
+                                                            class: 'dnnSecondaryAction'
+                                                        }],
+                                                        close: close,
+                                                        dialogClass: 'dnnFormPopup ftpDialog',
+                                                        height: height,
+                                                        isOpen: isVisible,
+                                                        modal: true,
+                                                        resizable: false,
+                                                        title: dialogTitle,
+                                                        widget, widget,
+                                                        width: width,
+                                                    }">
+    <div class="dnnFormMessage dnnFormInfo" data-bind="text: resx.uploadTreeMessage"></div>
+    <div id="uploadFile">
+        
+    </div>
+</div>

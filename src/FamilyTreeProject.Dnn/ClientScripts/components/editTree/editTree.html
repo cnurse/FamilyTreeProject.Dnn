@@ -1,0 +1,34 @@
+﻿<div id="createTreePanel" class="dnnForm" data-bind="dialog: {
+                                                        buttons: [{
+                                                            text: resx.cancel,
+                                                            click: cancel,
+                                                            class: 'dnnSecondaryAction'
+                                                        }, {
+                                                            text: resx.save,
+                                                            click: saveTree,
+                                                            class: 'dnnPrimaryAction'
+                                                        }],
+                                                        close: close,
+                                                        dialogClass: 'dnnFormPopup ftpDialog',
+                                                        height: 475,
+                                                        isOpen: isVisible,
+                                                        modal: true,
+                                                        resizable: false,
+                                                        title: dialogTitle,
+                                                        widget, widget,
+                                                        width: 600,
+                                                    }">
+    <div class="dnnFormMessage dnnFormInfo" data-bind="text: resx.createTreeMessage"></div>
+    <div>
+        <label data-bind="text: resx.name"></label>
+        <input type="text" data-bind="value: name" />
+    </div>
+    <div>
+        <label data-bind="text: resx.title"></label>
+        <input type="text" data-bind="value: title" />
+    </div>
+    <div>
+        <label data-bind="text: resx.description"></label>
+        <textarea data-bind="value: description"></textarea>
+    </div>
+</div>

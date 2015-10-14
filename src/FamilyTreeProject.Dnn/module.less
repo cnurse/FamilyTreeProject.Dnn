@@ -18,9 +18,13 @@
 @otherBtn_background_color: #fff;
 @otherBtn_color: #333;
 
+@treeViewPanelRight_background_color: #eee;
+@treeViewPanelRight_border_color: #aaa;
+
 @boxShadow_color: #aaa;
 
 @heading_fontSize: 28px;
+@subheading_fontSize: 18px;
 @closeButton_fontSize: 28px;
 
 @width: 100%;
@@ -28,8 +32,14 @@
 @panel_InnerMargin: 15px;
 @border_radius: 4px;
 @tab_width: 150px;
+@headingLeft_width: 30%;
+@headingRight_width: 20%;
+@headingCenter_width: 40%;
+@panelLeft_width: 65%;
+@panelRight_width: 22%;
 
 @header_height:40px;
+@panel_minHeight: 500px;
 
 .ftpContainer {
     border: solid 1px @border_color;
@@ -49,6 +59,14 @@
     max-width:none;
 }
 
+.ftpContainer .ftpLeft {
+    float: left;
+}
+
+.ftpContainer .ftpRight {
+    float: right;
+}
+
 //Heading
 
 .ftpContainer .ftpHeading {
@@ -64,16 +82,18 @@
     font-size: @heading_fontSize;
     margin-left: @panel_OuterMargin;
     float: left;
-    width: 30%;
+    width: @headingCenter_width;
 }
 
 .ftpContainer .ftpHeading > div:first-child {
     margin-top:10px;
+    width: @headingLeft_width;
 }
 
 .ftpContainer .ftpHeading > div:last-child {
     margin-top:5px;
     float: right;
+    width: @headingRight_width;
 }
 
 .ftpContainer .ftpHeading > div > div {
@@ -81,6 +101,10 @@
     font-size: 16px;
     float:left;
     min-width: 50px;
+}
+
+.ftpContainer .ftpHeading > div > div.ftpButtons {
+    padding-top: 3px;
 }
 
 .ftpContainer .ftpHeading .ftpLabel {
@@ -93,7 +117,7 @@
 }
 
 .ftpContainer .ftpHeading select {
-    margin-top: -3px;
+    margin-top: -2px;
 }
 
 .ftpContainer .ftpHeading a.ftpIcon {
@@ -124,7 +148,7 @@
     display: inline-block;
     margin-left: 0px;
     margin-bottom: 0px;
-    //width: @panel_width - 1;
+    width: 100%;
     border-top-left-radius: @border_radius;
     border-top-right-radius: @border_radius;
     background-color: @tab_background_color;
@@ -153,9 +177,41 @@
     color: @selectedTab_color;
 }
 
-//Panel
 
-.ftpContainer .ftpPanel {
+//Panels
+.ftpContainer .ftpPanel .ftpTreeViewLeft {
+    float: left;
+    margin: @panel_OuterMargin;
+    padding: @panel_InnerMargin;
+    border: 1px solid @treeViewPanelRight_border_color;
+    width: @panelLeft_width;
+    min-height: @panel_minHeight;
+}
+
+.ftpContainer .ftpPanel .ftpTreeViewRight {
+    float: right;
+    margin: @panel_OuterMargin;
+    padding: @panel_InnerMargin;
+    border: 1px solid @treeViewPanelRight_border_color;
+    width: @panelRight_width;
+    min-height: @panel_minHeight;
+}
+
+.ftpContainer .ftpPanel .ftpSubHeading {
+    margin-bottom: 10px;
+    font-size: @subheading_fontSize;
+    margin-top: 20px;
+}
+
+.ftpContainer .ftpPanel .ftpSummary {
+    height: 25px;
+}
+
+//TreeView Panel
+
+.ftpContainer #treeview-panel .ftpTreeViewRight {
+    border-radius: @border_radius;
+    background-color: @treeViewPanelRight_background_color;
 }
 
 //Search Panel
@@ -350,8 +406,30 @@
 }
 
 // Quick Settings
-
 .qsContainer .dnnForm .dnnFormMessage {
     width: 400px;
     white-space: normal;
+}
+
+//Dialogs
+.ftpDialog .ui-dialog-buttonset {
+    text-align: center;
+}
+.ftpDialog .dnnPrimaryAction, .ftpDialog .dnnSecondaryAction {
+    box-shadow: none;   
+}
+
+.ftpDialog label {
+    display: block;
+}
+
+.ftpDialog input {
+    width: 220px;
+    margin-bottom: 10px;
+}
+
+.ftpDialog textarea {
+    width: 95%;
+    height: 45px;
+    margin-bottom: 10px;
 }

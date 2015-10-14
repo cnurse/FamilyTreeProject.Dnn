@@ -32,8 +32,12 @@ namespace FamilyTreeProject.Dnn.Data
                                                         .TableName("Trees")
                                                         .PrimaryKey("TreeId")
                                                         .Property(a => a.TreeId, "TreeId")
+                                                        .Property(a => a.HomeIndividualId, "HomeIndividualID")
+                                                        .Property(a => a.LastViewedIndividualId, "LastViewedIndividualID")
                                                         .Property(a => a.Name, "Name")
                                                         .Property(a => a.OwnerId, "OwnerID")
+                                                        .Property(a => a.Title, "Title")
+                                                        .Property(a => a.Description, "Description")
                                 },
                                 {
                                     typeof (Repository), CreateMapper<Repository>()
@@ -57,6 +61,8 @@ namespace FamilyTreeProject.Dnn.Data
                                                             .Property(a => a.TreeId, "TreeID")
                                                             .Property(a => a.RepositoryId, "RepositoryID")
                                                             .Property(a => a.Author, "Author")
+                                                            .Property(a => a.Publisher, "Publisher")
+                                                            .Property(a => a.Title, "Title")
                                 },
                                 {
                                     typeof (Citation), CreateMapper<Citation>()
@@ -81,7 +87,7 @@ namespace FamilyTreeProject.Dnn.Data
                                                             .Scope("TreeId")
                                                             .Property(a => a.Id, "ID")
                                                             .Property(a => a.TreeId, "TreeID")
-                                                            .Property(a => a.Text, "SourceID")
+                                                            .Property(a => a.Text, "Text")
                                                             .Property(a => a.OwnerId, "OwnerID")
                                                             .Property(a => a.OwnerType, "OwnerType")
                                 },

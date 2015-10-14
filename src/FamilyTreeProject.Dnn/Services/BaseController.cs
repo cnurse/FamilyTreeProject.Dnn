@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using DotNetNuke.Services.Localization;
 using DotNetNuke.Web.Api;
 using Naif.Core.Collections;
 
@@ -17,19 +18,20 @@ namespace FamilyTreeProject.Dnn.Services
 {
     public class BaseController : DnnApiController
     {
+        protected virtual string LocalResourceFile
+        {
+            get { return ""; }
+        }
+
         public HttpResponseMessage GetEntity<TEntity, TViewModel>(Func<TEntity> getEntity, Func<TEntity, TViewModel> createViewModel)
         {
             var entity = getEntity();
             var viewModel = createViewModel(entity);
 
             var response = new
-            {
-                success = true,
-                data = new
-                    {
-                        results = viewModel,
-                    }
-                };
+                            {
+                                results = viewModel,
+                            };
 
             return Request.CreateResponse(response);
         }
@@ -44,12 +46,8 @@ namespace FamilyTreeProject.Dnn.Services
 
             var response = new
                             {
-                                success = true,
-                                data = new
-                                        {
-                                            results = viewModels,
-                                            totalResults = entityList.Count()
-                                        }
+                                results = viewModels,
+                                totalResults = entityList.Count()
                             };
 
             return Request.CreateResponse(response);
@@ -84,5 +82,9 @@ namespace FamilyTreeProject.Dnn.Services
             return Request.CreateResponse(response);
         }
 
+        protected string LocalizeString(string key)
+        {
+            return Localization.GetString(key, LocalResourceFile);
+        }
     }
 }

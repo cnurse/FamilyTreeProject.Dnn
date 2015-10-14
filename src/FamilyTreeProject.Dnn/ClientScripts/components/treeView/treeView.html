@@ -1,0 +1,46 @@
+<div class="ftpPanel" id="treeview-panel">
+    <div class="ftpTreeViewLeft">
+        <img src=""/>
+        <div class="ftpTitle" data-bind="text: title"></div>
+        <div class="ftpNormal" data-bind="text: description"></div>
+    </div>
+    <div class="ftpTreeViewRight">
+        <div>
+            <div class="ftpSubHeading">
+                <i class="fa fa-home"></i>
+                <span data-bind="text:resx.homePerson"></span>
+            </div>
+            <div>
+                <span data-bind="text: homeIndividual"></span>
+            </div>
+        </div>
+        <div>
+            <div class="ftpSubHeading">
+                <i class="fa fa-eye"></i>
+                <span data-bind="text:resx.lastViewed"></span>
+            </div>
+            <div>
+                <span data-bind="text: lastViewedIndividual"></span>
+            </div>
+        </div>
+        <div>
+            <div class="ftpSubHeading">
+                <span data-bind="text:resx.summary"></span>
+            </div>
+            <div class="ftpSummary">
+                <div class="ftpLeft">
+                    <i class="fa fa-user"></i>
+                    <span data-bind="text:resx.individuals"></span>
+                </div>
+                <div class="ftpRight" data-bind="text:individualCount"></div>
+            </div>
+            <div class="ftpSummary">
+                <div class="ftpLeft">
+                    <i class="fa fa-users"></i>
+                    <span data-bind="text:resx.families"></span>
+                </div>
+                <div class="ftpRight" data-bind="text:familyCount"></div>
+            </div>
+        </div>
+    </div>
+</div>

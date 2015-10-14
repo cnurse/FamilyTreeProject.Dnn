@@ -1,5 +1,5 @@
 ﻿.ftpContainer {
-  border: solid 1px #aaaaaa;
+  border: solid 1px #aaa;
   width: 100%;
 }
 .ftpContainer select {
@@ -12,32 +12,43 @@
 .ftpContainer #ftpGettingStarted .dnnFormMessage {
   max-width: none;
 }
+.ftpContainer .ftpLeft {
+  float: left;
+}
+.ftpContainer .ftpRight {
+  float: right;
+}
 .ftpContainer .ftpHeading {
   height: 40px;
   padding-top: 15px;
   padding-bottom: 10px;
-  border-bottom: solid 1px #aaaaaa;
-  background-color: #ffffff;
-  box-shadow: 0px 2px 2px #aaaaaa;
+  border-bottom: solid 1px #aaa;
+  background-color: #fff;
+  box-shadow: 0px 2px 2px #aaa;
 }
 .ftpContainer .ftpHeading > div {
   font-size: 28px;
   margin-left: 20px;
   float: left;
-  width: 30%;
+  width: 40%;
 }
 .ftpContainer .ftpHeading > div:first-child {
   margin-top: 10px;
+  width: 30%;
 }
 .ftpContainer .ftpHeading > div:last-child {
   margin-top: 5px;
   float: right;
+  width: 20%;
 }
 .ftpContainer .ftpHeading > div > div {
   padding: 6px;
   font-size: 16px;
   float: left;
   min-width: 50px;
+}
+.ftpContainer .ftpHeading > div > div.ftpButtons {
+  padding-top: 3px;
 }
 .ftpContainer .ftpHeading .ftpLabel {
   margin-top: 5px;
@@ -47,7 +58,7 @@
   display: inline-block;
 }
 .ftpContainer .ftpHeading select {
-  margin-top: -3px;
+  margin-top: -2px;
 }
 .ftpContainer .ftpHeading a.ftpIcon {
   float: right;
@@ -57,8 +68,8 @@
 }
 .ftpContainer .ftpBody {
   margin: 20px;
-  background-color: #ffffff;
-  border: solid 1px #aaaaaa;
+  background-color: #fff;
+  border: solid 1px #aaa;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -70,9 +81,10 @@
   display: inline-block;
   margin-left: 0px;
   margin-bottom: 0px;
+  width: 100%;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  background-color: #eeeeee;
+  background-color: #eee;
   padding-left: 1px;
 }
 .ftpContainer .ftpMenu ul > li {
@@ -87,19 +99,47 @@
   cursor: pointer;
 }
 .ftpContainer .ftpMenu ul > li.selected {
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .ftpContainer .ftpMenu ul > li.selected {
-  background-color: #ffffff;
+  background-color: #fff;
   color: #0087c6;
+}
+.ftpContainer .ftpPanel .ftpTreeViewLeft {
+  float: left;
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid #aaa;
+  width: 65%;
+  min-height: 500px;
+}
+.ftpContainer .ftpPanel .ftpTreeViewRight {
+  float: right;
+  margin: 20px;
+  padding: 15px;
+  border: 1px solid #aaa;
+  width: 22%;
+  min-height: 500px;
+}
+.ftpContainer .ftpPanel .ftpSubHeading {
+  margin-bottom: 10px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+.ftpContainer .ftpPanel .ftpSummary {
+  height: 25px;
+}
+.ftpContainer #treeview-panel .ftpTreeViewRight {
+  border-radius: 4px;
+  background-color: #eee;
 }
 .ftpContainer .ftpSearchPanel {
   padding: 15px;
-  border-bottom: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaa;
 }
 .ftpContainer .ftpSearchPanel > .ftpSearchBox {
   padding: 8px;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #aaa;
   width: 250px;
   border-radius: 3px;
   margin-bottom: 0;
@@ -111,10 +151,10 @@
 .ftpContainer .ftpTable {
   width: 100%;
   border-collapse: collapse;
-  border-bottom: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaa;
 }
 .ftpContainer .ftpTable tr:nth-child(2n) {
-  background: #eeeeee;
+  background: #eee;
 }
 .ftpContainer .ftpTable > tbody > tr {
   transition: background 100ms linear;
@@ -123,8 +163,8 @@
   background: #d9ecfa;
 }
 .ftpContainer .ftpTable th {
-  border-left: 1px solid #aaaaaa;
-  border-bottom: 1px solid #aaaaaa;
+  border-left: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
   text-align: center;
 }
 .ftpContainer .ftpTable th,
@@ -142,7 +182,7 @@
   font-size: 18px;
 }
 .ftpContainer .ftpTable tfoot {
-  border-top: 1px solid #aaaaaa;
+  border-top: 1px solid #aaa;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 5px;
 }
@@ -181,13 +221,13 @@
 .ftpContainer .ftpPager td a.next {
   background-position: center center;
   background-repeat: no-repeat;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #aaa;
   width: 25px;
   height: 25px;
   display: block;
   cursor: pointer;
   border-radius: 2px;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 .ftpContainer .ftpTable .ftpPager td a.prev {
   background-image: url('images/left.png');
@@ -201,8 +241,8 @@
   cursor: default;
 }
 .ftpContainer .ftpButton {
-  background: #ffffff;
-  color: #333333;
+  background: #fff;
+  color: #333;
   display: inline-block;
   padding: 8px;
   cursor: pointer;
@@ -210,13 +250,13 @@
   border-radius: 3px;
   text-decoration: none;
   font-size: 13px;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #aaa;
   text-align: center;
   line-height: normal;
 }
 .ftpContainer a.primarybtn {
   background: #0087c6;
-  color: #ffffff !important;
+  color: #fff !important;
   display: inline-block;
   padding: 9px 9px;
   cursor: pointer;
@@ -228,7 +268,7 @@
 }
 .ftpContainer a.secondarybtn {
   background: #e4e4e4;
-  color: #333333 !important;
+  color: #333 !important;
   display: inline-block;
   padding: 9px 9px;
   cursor: pointer;
@@ -255,4 +295,23 @@
 .qsContainer .dnnForm .dnnFormMessage {
   width: 400px;
   white-space: normal;
+}
+.ftpDialog .ui-dialog-buttonset {
+  text-align: center;
+}
+.ftpDialog .dnnPrimaryAction,
+.ftpDialog .dnnSecondaryAction {
+  box-shadow: none;
+}
+.ftpDialog label {
+  display: block;
+}
+.ftpDialog input {
+  width: 220px;
+  margin-bottom: 10px;
+}
+.ftpDialog textarea {
+  width: 95%;
+  height: 45px;
+  margin-bottom: 10px;
 }

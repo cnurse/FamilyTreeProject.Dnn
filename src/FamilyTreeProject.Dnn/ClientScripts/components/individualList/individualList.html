@@ -1,0 +1,47 @@
+﻿<div class="ftpPanel" id="individuals-panel">
+    <div id="individuals-listView" class="ftpSubPanel">
+        <div class="ftpSearchPanel">
+            <input type="text" class="ftpSearchBox" data-bind="value: searchText, valueUpdate: 'afterkeydown', attr: { 'placeholder': resx.findIndividual}" />
+            <a class="ftpButton right" data-bind="click: addIndividual, text: resx.addIndividual"></a>
+        </div>
+    </div>
+    <table class="ftpTable">
+        <thead>
+            <tr>
+                <th data-bind="text: resx.name"></th>
+                <th data-bind="text: resx.birth"></th>
+                <th data-bind="text: resx.death"></th>
+                <th width="100px" data-bind="text: resx.actions"></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: individuals">
+            <tr>
+                <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected}">
+                    <span data-bind="text: name"></span>
+                </td>
+                <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected}">
+                    <span data-bind="text: birth"></span>
+                </td>
+                <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected }">
+                    <span data-bind="text: death"></span>
+                </td>
+                <td width="100px" data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected }">
+                    <a class="dccIcon" data-bind="visible: selected() && !canEdit(), click: editIndividual"><i class="fa fa-search"></i></a>
+                    <a class="dccIcon" data-bind="visible: selected() && canEdit(), click: editIndividual"><i class="fa fa-pencil"></i></a>
+                    <a class="dccIcon" data-bind="visible: selected() && canEdit(), click: deleteIndividual"><i class="fa fa-trash-o"></i></a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <!-- ko component: {
+                            name: "pager",
+                            params: { pageSize : pageSize, totalResults : totalResults }
+                        } -->
+                    <!-- /ko -->
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
