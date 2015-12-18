@@ -14,30 +14,26 @@
                 <th width="100px" data-bind="text: resx.actions"></th>
             </tr>
         </thead>
-        <tbody data-bind="foreach: individuals">
-            <tr>
-                <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected}">
-                    <span data-bind="text: name"></span>
-                </td>
-                <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected}">
-                    <span data-bind="text: birth"></span>
-                </td>
-                <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected }">
-                    <span data-bind="text: death"></span>
-                </td>
-                <td width="100px" data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected }">
-                    <a class="dccIcon" data-bind="visible: selected() && !canEdit(), click: editIndividual"><i class="fa fa-search"></i></a>
-                    <a class="dccIcon" data-bind="visible: selected() && canEdit(), click: editIndividual"><i class="fa fa-pencil"></i></a>
-                    <a class="dccIcon" data-bind="visible: selected() && canEdit(), click: deleteIndividual"><i class="fa fa-trash-o"></i></a>
-                </td>
-            </tr>
+        <tbody data-bind="foreach: { data: individuals, as: 'individual'}">
+            <!-- ko component: {
+                    name: "individualRow",
+                    params: {
+                        individual: ko.observable(individual),
+                        onSelected: $parent.viewIndividual,
+                    }
+                } -->
+            <!-- /ko -->
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="4">
                     <!-- ko component: {
                             name: "pager",
-                            params: { pageSize : pageSize, totalResults : totalResults }
+                            params: { pageSize : pageSize,
+                                pageIndex: pageIndex,
+                                totalResults : totalResults,
+                                refresh : refresh 
+                            }
                         } -->
                     <!-- /ko -->
                 </td>

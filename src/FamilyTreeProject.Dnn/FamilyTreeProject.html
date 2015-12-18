@@ -18,7 +18,7 @@
 
 
 <div id="FTP-[ModuleContext:ModuleId]" class="ftpContainer">
-    <div class="ftpHeading">
+    <div class="ftpHeader">
         <div>[Resx:{key:"Heading"}]</div>
         <!-- ko component: {
                 name: "treeSelector",
@@ -36,42 +36,48 @@
     </div>
     <div class="ftpBody" data-bind="visible: treeId() > 0" style="display:none">
         <!-- ko component: {
-                name: "viewSelector",
-                params: { panels : panels, activePanel : activePanel }
-            } -->
+            name: "viewSelector",
+            params: {
+                panels : panels,
+                activePanel : activePanel, 
+                selectedIndividualId: selectedIndividualId 
+            }
+        } -->
         <!-- /ko -->
 
         <div id="ftp-panels">
             <!-- ko if: activePanel() == "tree" -->
                 <!-- ko component: {
-                        name: "treeView",
-                        params: { treeId: treeId }
-                    } -->
+                    name: "treeView",
+                    params: {
+                        treeId: treeId,
+                        activePanel : activePanel,
+                        selectedIndividualId: selectedIndividualId 
+                    }
+                } -->
                 <!-- /ko -->
             <!-- /ko -->
             <!-- ko if: activePanel() == "individuals" -->
                 <!-- ko component: {
-                        name: "individualList",
-                        params: { treeId: treeId }
-                    } -->
+                    name: "individualList",
+                    params: {
+                        treeId: treeId,
+                        activePanel : activePanel,
+                        selectedIndividualId: selectedIndividualId 
+                    }
+                } -->
                 <!-- /ko -->
             <!-- /ko -->
             <!-- ko if: activePanel() == "familyGroup" -->
                 <!-- ko component: {
-                        name: "familyGroupView",
-                        params: { }
-                    } -->
+                    name: "familyGroupView",
+                    params: {
+                        treeId: treeId,
+                        selectedIndividualId: selectedIndividualId 
+                    }
+                } -->
                 <!-- /ko -->
             <!-- /ko -->
-            <!-- ko if: activePanel() == "ancestors" -->
-                <!-- ko component: {
-                        name: "ancestorsView",
-                        params: { }
-                    } -->
-                <!-- /ko -->
-            <!-- /ko -->
-
-
         </div>
 
         <div id="loadingbar" style="display: none;">
@@ -86,15 +92,24 @@
         var moduleId = parseInt("[ModuleContext:ModuleId]");
 
         var localizedSettings = {
+            addFather: '[Resx:{key:"AddFather"}]',
             addIndividual: '[Resx:{key:"AddIndividual"}]',
-            ancestorView: '[Resx:{key:"AncestorView"}]',
+            addMother: '[Resx:{key:"AddMother"}]',
+            baptismFormat: '[Resx:{key:"BaptismFormat"}]',
             birth: '[Resx:{key:"Birth"}]',
+            birthFormat: '[Resx:{key:"BirthFormat"}]',
+            buriedFormat: '[Resx:{key:"BuriedFormat"}]',
             cancel: '[Resx:{key:"Cancel"}]',
             createTree: '[Resx:{key:"CreateTree"}]',
             createTreeMessage: '[Resx:{key:"CreateTreeMessage"}]',
             death: '[Resx:{key:"Death"}]',
+            deathFormat: '[Resx:{key:"DeathFormat"}]',
             description: '[Resx:{key:"Description"}]',
+            editIndividual: '[Resx:{key:"EditIndividual"}]',
+            editTree: '[Resx:{key:"EditTree"}]',
+            facts: '[Resx:{key:"Facts"}]',
             families: '[Resx:{key:"Families"}]',
+            family: '[Resx:{key:"Family"}]',
             familyGroupView: '[Resx:{key:"FamilyGroupView"}]',
             fileUpload: {
                 title:'[Resx:{key:"UploadFile"}]',
@@ -115,8 +130,9 @@
                 keepButtonText: '[Resx:{key:"KeepButtonText"}]',
                 replaceButtonText: '[Resx:{key:"ReplaceButtonText"}]',
                 tooManyFiles: '[Resx:{key:"TooManyFiles"}]',
-                errorDialogTitle: '[Resx:{key:"ErrorDialogTitle"}]'
-            },
+                errorDialogTitle: '[Resx:{key:"ErrorDialogTitle"}]',
+                invalidFileExtensions: '[Resx:{key:"InvalidFileExtensions"}]'
+        },
             findIndividual: '[Resx:{key:"FindIndividual"}]',
             homePerson: '[Resx:{key:"HomePerson"}]',
             individualList: '[Resx:{key:"IndividualList"}]',
@@ -128,11 +144,15 @@
             myFolder: '[Resx:{key:"MyFolder"}]',
             name: '[Resx:{key:"Name"}]',
             pager_PageDesc: '[Resx:{key:"Pager_PageDesc"}]',
+            parents: '[Resx:{key:"Parents"}]',
             save: '[Resx:{key:"Save"}]',
+            spouseChildren: '[Resx:{key:"SpouseChildren"}]',
             summary: '[Resx:{key:"Summary"}]',
             title: '[Resx:{key:"Title"}]',
             tree: '[Resx:{key:"Tree"}]',
             treeOverView: '[Resx:{key:"TreeOverView"}]',
+            uploadImage: '[Resx:{key:"UploadImage"}]',
+            uploadImageMessage: '[Resx:{key:"UploadImageMessage"}]',
             uploadTree: '[Resx:{key:"UploadTree"}]',
             uploadTreeMessage: '[Resx:{key:"UploadTreeMessage"}]'
         };
@@ -141,15 +161,17 @@
             moduleId: moduleId,
 
             initialPanel: "tree",
-            ancestorsPanel: "ancestors",
             individualsPanel: "individuals",
             familyGroupPanel: "familyGroup",
-            treePanel: "tree"
+            treePanel: "tree",
+            femaleIcon: "DesktopModules/FTP/FamilyTreeProject/Images/female.png",
+            maleIcon: "DesktopModules/FTP/FamilyTreeProject/Images/male.png"
         };
 
         var sfSettings = {
             servicesFramework: $.ServicesFramework(moduleId),
             loadingBarId: '#loadingbar',
+            dnnServicesServicePath: "InternalServices",
             servicePath: "FTP/FamilyTreeProject"
         }
 
@@ -160,14 +182,14 @@
             paths: {
                 "jquery": "modules/jquery.js",
                 "knockout": "modules/knockout.js",
-                "dnnUtility": "/Resources/Shared/Scripts/dnn.utility.js",
-                "dnnPager": "/Resources/Shared/Scripts/dnn.kopager.js",
+                "individual": "modules/individual.js",
+                "individualViewModel": "modules/individualViewModel.js",
                 "config": "modules/config.js"
             }
         });
 
         //Load Configuration
-        require(["config", "js!dnnUtility", "domReady!"], function (cfg) {
+        require(["config", "domReady!"], function (cfg) {
             cfg.init(settings, localizedSettings, sfSettings);
         });
 

@@ -14,22 +14,27 @@
  */
 define("components/editTree/editTree", ["knockout", "config", "text!./editTree.html"], function (ko, config, htmlString) {
 
-    // ReSharper disable once InconsistentNaming
-    function EditTreeViewModel(props) {
+    function editTreeViewModel(props) {
         var self = this;
         self.resx = config.resx;
 
-        self.dialogTitle = props.title;
+        self.dialogTitle = props.dialogTitle;
         self.isVisible = props.isVisible;
 
         self.onSuccess = props.onSuccess;
 
-        self.treeId = ko.observable(props.treeId);
+        self.treeId = ko.observable(props.treeId());
         self.newTreeId = props.newTreeId;
 
-        self.name = ko.observable("");
-        self.title = ko.observable("");
-        self.description = ko.observable("");
+        if (self.treeId() === -1) {
+            self.name = ko.observable("");
+            self.title = ko.observable("");
+            self.description = ko.observable("");
+        } else {
+            self.name = props.name;
+            self.title = props.title;
+            self.description = props.description;
+        }
 
         self.isAddMode = ko.computed(function() {
             return self.treeId() === -1;
@@ -61,10 +66,9 @@ define("components/editTree/editTree", ["knockout", "config", "text!./editTree.h
                     self.onSuccess();
                 }
             );
-
         }
     }
 
     // Return component definition
-    return { viewModel: EditTreeViewModel, template: htmlString };
+    return { viewModel: editTreeViewModel, template: htmlString };
 });

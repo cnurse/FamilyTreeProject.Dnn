@@ -1,17 +1,32 @@
 <div class="ftpPanel" id="treeview-panel">
-    <div class="ftpTreeViewLeft">
-        <img src=""/>
-        <div class="ftpTitle" data-bind="text: title"></div>
-        <div class="ftpNormal" data-bind="text: description"></div>
+    <div class="ftpSubPanelLeft">
+        <div>
+            <a class="ftpIcon" data-bind="attr: {title: resx.editTree}, click: editTree"><i class="fa fa-pencil"></i></a>
+        </div>
+        <div>
+            <div class="ftpImage">
+                <img data-bind="attr: {src: imageUrl}, click: uploadFile, event: { mouseover: enableButton, mouseout: disableButton}"/>
+                <div data-bind="visible: showUploadButton"><i class="fa fa-camera"></i></div>
+            </div>
+            <div class="ftpTitle" data-bind="text: title"></div>
+            <div class="ftpNormal" data-bind="text: description"></div>
+        </div>
     </div>
-    <div class="ftpTreeViewRight">
+    <div class="ftpSubPanelRight">
         <div>
             <div class="ftpSubHeading">
                 <i class="fa fa-home"></i>
                 <span data-bind="text:resx.homePerson"></span>
             </div>
             <div>
-                <span data-bind="text: homeIndividual"></span>
+                <!-- ko component: {
+                        name: "individualLink",
+                        params: {
+                            individual: homeIndividual,
+                            onSelected: viewIndividual,
+                        }
+                    } -->
+                <!-- /ko -->
             </div>
         </div>
         <div>
@@ -20,7 +35,14 @@
                 <span data-bind="text:resx.lastViewed"></span>
             </div>
             <div>
-                <span data-bind="text: lastViewedIndividual"></span>
+                <!-- ko component: {
+                        name: "individualLink",
+                        params: {
+                            individual: lastViewedIndividual,
+                            onSelected: viewIndividual,
+                        }
+                    } -->
+                <!-- /ko -->
             </div>
         </div>
         <div>
@@ -29,18 +51,57 @@
             </div>
             <div class="ftpSummary">
                 <div class="ftpLeft">
-                    <i class="fa fa-user"></i>
-                    <span data-bind="text:resx.individuals"></span>
+                    <i class="fa fa-user fa-fw"></i>
+                    <a data-bind="click: viewIndividuals"><span data-bind="text:resx.individuals"></span></a>
                 </div>
                 <div class="ftpRight" data-bind="text:individualCount"></div>
             </div>
             <div class="ftpSummary">
                 <div class="ftpLeft">
-                    <i class="fa fa-users"></i>
+                    <i class="fa fa-users fa-fw"></i>
                     <span data-bind="text:resx.families"></span>
                 </div>
                 <div class="ftpRight" data-bind="text:familyCount"></div>
             </div>
+            <div class="ftpSummary">
+                <div class="ftpLeft">
+                    <i class="fa fa-th-list fa-fw"></i>
+                    <span data-bind="text:resx.facts"></span>
+                </div>
+                <div class="ftpRight" data-bind="text:factCount"></div>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- ko component: {
+        name: "editTree",
+        params: { 
+            treeId: treeId,
+            name: name,
+            title: title,
+            description: description,
+            isVisible: showEdit,
+            dialogTitle: resx.editTree,
+            newTreeId: treeId ,
+            onSuccess: onTreeUpdated
+        }
+    } -->
+<!-- /ko -->
+<!-- ko component: {
+        name: "uploadFile",
+        params: { 
+            isVisible: showUpload,
+            title: resx.uploadImage,
+            message: resx.uploadImageMessage,
+            entityId: imageId,
+            onSuccess: onFileUploaded,
+            options: {
+                fileUploadMethod: 'File/UploadFile',
+                extensions: ['png','jpg','gif','jpeg'],
+                width: 600,
+                height:550
+            }
+        }
+    } -->
+<!-- /ko -->

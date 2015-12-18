@@ -14,8 +14,7 @@
  */
 define("components/treeSelector/treeSelector", ["knockout", "config", "text!./treeSelector.html"], function(ko, config, htmlString) {
 
-    // ReSharper disable once InconsistentNaming
-    function TreeSelectorViewModel(props) {
+    function treeSelectorViewModel(props) {
         var self = this;
         self.resx = config.resx;
 
@@ -95,5 +94,5 @@ define("components/treeSelector/treeSelector", ["knockout", "config", "text!./tr
     }
 
     // Return component definition
-    return { viewModel: TreeSelectorViewModel, template: htmlString };
+    return { viewModel: treeSelectorViewModel, template: htmlString };
 });

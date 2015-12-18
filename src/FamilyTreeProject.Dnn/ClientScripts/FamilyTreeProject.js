@@ -21,8 +21,8 @@ define("familyTreeProject", ["jquery", "knockout", "config"], function ($, ko, c
         viewModel.resx = config.resx;
 
         viewModel.treeId = ko.observable();
+        viewModel.selectedIndividualId = ko.observable();
         viewModel.panels = {
-            ancestors: config.settings.ancestorsPanel,
             familyGroup: config.settings.familyGroupPanel,
             individuals: config.settings.individualsPanel,
             tree: config.settings.treePanel
@@ -47,11 +47,15 @@ define("familyTreeProject", ["jquery", "knockout", "config"], function ($, ko, c
         ko.components.register("treeSelector", { require: "components/treeSelector/treeSelector" });
         ko.components.register("viewSelector", { require: "components/viewSelector/viewSelector" });
         ko.components.register("treeView", { require: "components/treeView/treeView" });
-        ko.components.register("ancestorsView", { require: "components/ancestorsView/ancestorsView" });
         ko.components.register("familyGroupView", { require: "components/familyGroupView/familyGroupView" });
         ko.components.register("individualList", { require: "components/individualList/individualList" });
+        ko.components.register("individualCard", { require: "components/individualCard/individualCard" });
+        ko.components.register("individualDetail", { require: "components/individualDetail/individualDetail" });
+        ko.components.register("individualLink", { require: "components/individualLink/individualLink" });
+        ko.components.register("individualRow", { require: "components/individualRow/individualRow" });
         ko.components.register("editTree", { require: "components/editTree/editTree" });
         ko.components.register("uploadFile", { require: "components/uploadFile/uploadFile" });
+        ko.components.register("pager", { require: "components/pager/pager" });
 
         ko.applyBindings(viewModel, $rootElement[0]);
     };

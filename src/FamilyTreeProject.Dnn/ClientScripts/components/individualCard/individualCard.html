@@ -1,0 +1,30 @@
+﻿<!-- ko if: !isNull() -->
+    <div class="ftpCard" data-bind="click: selectIndividual">
+        <div>
+            <a class="ftpIcon" data-bind="attr: {title: resx.editIndividual}, click: editIndividual"><i class="fa fa-pencil"></i></a>
+        </div>
+        <div>
+            <div class="ftpImage">
+                <img data-bind="attr: {src: imageUrl}"/>
+            </div>
+            <div class="ftpTitle" data-bind="text: name"></div>
+            <div>
+                <div class="ftpNormal" data-bind="text: lived"></div>
+            </div>
+        </div>
+    </div>
+<!-- /ko -->
+<!-- ko if: isNull() -->
+    <div class="ftpCard ftpAdd">
+        <div>
+            <div class="ftpImage">
+                <img data-bind="attr: {src: imageUrl}" />
+            </div>
+            <div class="ftpTitle" >
+                <i class="fa fa-plus-circle"></i>
+                <span data-bind="text: addParent"></span>
+            </div>
+        </div>
+    </div>
+<!-- /ko -->
+

@@ -267,4 +267,49 @@
   <data name="Individuals.Text" xml:space="preserve">
     <value>Individuals</value>
   </data>
+  <data name="EditTree.Text" xml:space="preserve">
+    <value>Edit Tree Properties</value>
+  </data>
+  <data name="Facts.Text" xml:space="preserve">
+    <value>Facts</value>
+  </data>
+  <data name="UploadImage.Text" xml:space="preserve">
+    <value>Upload Image</value>
+  </data>
+  <data name="UploadImageMessage.Text" xml:space="preserve">
+    <value>You can upload a new Image for your Family Tree.</value>
+  </data>
+  <data name="InvalidFileExtensions.Text" xml:space="preserve">
+    <value>The file has an invalid file extension</value>
+  </data>
+  <data name="EditIndividual.Text" xml:space="preserve">
+    <value>Edit Individual</value>
+  </data>
+  <data name="Family.Text" xml:space="preserve">
+    <value>Family</value>
+  </data>
+  <data name="Parents.Text" xml:space="preserve">
+    <value>Parents</value>
+  </data>
+  <data name="SpouseChildren.Text" xml:space="preserve">
+    <value>Spouse and Children</value>
+  </data>
+  <data name="BaptismFormat.Text" xml:space="preserve">
+    <value>Bapt: {0}</value>
+  </data>
+  <data name="BirthFormat.Text" xml:space="preserve">
+    <value>Born: {0}</value>
+  </data>
+  <data name="BuriedFormat.Text" xml:space="preserve">
+    <value>Buried: {0}</value>
+  </data>
+  <data name="DeathFormat.Text" xml:space="preserve">
+    <value>Died: {0}</value>
+  </data>
+  <data name="AddFather.Text" xml:space="preserve">
+    <value>Add Father</value>
+  </data>
+  <data name="AddMother.Text" xml:space="preserve">
+    <value>Add Mother</value>
+  </data>
 </root>

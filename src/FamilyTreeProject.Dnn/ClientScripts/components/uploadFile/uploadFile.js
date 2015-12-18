@@ -14,19 +14,20 @@
  */
 define("components/uploadFile/uploadFile", ["jquery", "knockout", "config", "text!./uploadFile.html"], function ($, ko, config, htmlString) {
 
-    // ReSharper disable once InconsistentNaming
-    function UploadFileViewModel(props) {
+    function uploadFileViewModel(props) {
         var self = this;
         var options = $.extend({}, config.settings.defaultFileUploadSettings, props.options);
-        var treeId = -1;
+        var entityId = -1;
 
         self.resx = config.resx;
 
         self.dialogTitle = props.title;
+        self.dialogMessage = props.message;
         self.isVisible = props.isVisible;
         self.width = options.width;
         self.height = options.height;
-        self.newTreeId = props.newTreeId;
+
+        self.entityId = props.entityId;
 
         self.onSuccess = props.onSuccess;
 
@@ -47,8 +48,8 @@ define("components/uploadFile/uploadFile", ["jquery", "knockout", "config", "tex
         }
 
         self.close = function () {
-            if (treeId > -1) {
-                self.newTreeId(treeId);
+            if (entityId > -1) {
+                self.entityId(entityId);
                 if (typeof self.onSuccess === "function") {
                     self.onSuccess();
                 }
@@ -70,13 +71,17 @@ define("components/uploadFile/uploadFile", ["jquery", "knockout", "config", "tex
             }
         }
 
-        self.uploadComplete = function(event, data) {
-            treeId = JSON.parse(data).treeId;
+        self.uploadComplete = function (event, data) {
+            if (options.fileUploadMethod === "Tree/UploadTree") {
+                entityId = JSON.parse(data).treeId;
+            } else {
+                entityId = JSON.parse(data).fileId;
+            }
         }
 
         self.init();
     }
 
     // Return component definition
-    return { viewModel: UploadFileViewModel, template: htmlString };
+    return { viewModel: uploadFileViewModel, template: htmlString };
 });

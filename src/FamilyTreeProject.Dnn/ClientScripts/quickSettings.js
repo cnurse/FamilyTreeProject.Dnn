@@ -1,31 +1,27 @@
-﻿if (typeof ftp === "undefined" || ftp === null) {
-    ftp = {};
-};
+﻿/*
+ Copyright (C) 2014-2015 Charles Nurse
+                                      
+ Licensed under MIT License           
+ (see included LICENSE)               
+                                      
+ */
 
-ftp.QuickSettings = function ($, ko, options, resx) {
-    var opts = $.extend({}, ftp.QuickSettings.defaultOptions, options);
+define("quickSettings", ["jquery", "knockout", "config"], function($, ko, config) {
     var $rootElement;
-
-    var sf = dnn.sf();
-    sf.init(opts);
-    sf.settingsService = function () {
-        sf.serviceController = "Settings";
-        return sf;
-    };
 
     var viewModel = {};
 
-    var init = function (element) {
+    var init = function(element) {
         $rootElement = $(element);
 
         viewModel.owner = ko.observable("");
 
         viewModel.getSettings = function() {
-            sf.settingsService().get("GetSettings", {},
+            config.settingsService().get("GetSettings", {},
                 function(data) {
-                    if (typeof data !== "undefined" && data != null && data.success === true) {
+                    if (typeof data !== "undefined" && data != null) {
                         //Success
-                        viewModel.owner(data.data.results.owner);
+                        viewModel.owner(data.results.owner);
                     }
                 },
                 function() {
@@ -33,13 +29,13 @@ ftp.QuickSettings = function ($, ko, options, resx) {
                 });
         };
 
-        viewModel.saveSettings = function () {
+        viewModel.saveSettings = function() {
             var params = {
                 owner: viewModel.owner()
             };
 
-            sf.settingsService().post("SaveSettings", params,
-                function (data) {
+            config.settingsService().post("SaveSettings", params,
+                function(data) {
                     if (data.success === true) {
                         //Success
                     } else {
@@ -47,7 +43,7 @@ ftp.QuickSettings = function ($, ko, options, resx) {
                         util.alert(data.message, resx.ok);
                     }
                 },
-                function () {
+                function() {
                     //Failure
                 }
             );
@@ -57,7 +53,7 @@ ftp.QuickSettings = function ($, ko, options, resx) {
         ko.applyBindings(viewModel, $rootElement[0]);
 
         $(element).dnnQuickSettings({
-            moduleId: opts.moduleId,
+            moduleId: config.settings.moduleId,
             onSave: viewModel.saveSettings
         });
 
@@ -67,8 +63,4 @@ ftp.QuickSettings = function ($, ko, options, resx) {
     return {
         init: init
     }
-};
-
-ftp.QuickSettings.defaultOptions = {
-
-};
+});

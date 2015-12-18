@@ -6,29 +6,15 @@
 //                                         *
 // *****************************************
 
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.UI.WebControls;
-using DotNetNuke.Collections;
-using DotNetNuke.Common.Utilities;
-using DotNetNuke.Entities.Host;
-using DotNetNuke.Entities.Icons;
-using DotNetNuke.Entities.Users;
-using DotNetNuke.Instrumentation;
+using DotNetNuke.Common;
 using DotNetNuke.Services.FileSystem;
 using DotNetNuke.Web.Api;
 using DotNetNuke.Web.Api.Internal;
-using DotNetNuke.Web.InternalServices;
 using FamilyTreeProject.Dnn.Common;
 using FamilyTreeProject.Dnn.Data;
 using FamilyTreeProject.Dnn.ViewModels;
@@ -39,10 +25,9 @@ namespace FamilyTreeProject.Dnn.Services
     [AllowAnonymous]
     public class TreeController : BaseController
     {
-        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(TreeController));
-
         private readonly IFamilyService _familyService;
         private readonly IIndividualService _individualService;
+        private readonly IFactService _factService;
         private readonly ITreeService _treeService;
 
         public TreeController()
@@ -53,6 +38,7 @@ namespace FamilyTreeProject.Dnn.Services
             _treeService = serviceFactory.CreateTreeService();
             _familyService = serviceFactory.CreateFamilyService();
             _individualService = serviceFactory.CreateIndividualService();
+            _factService = serviceFactory.CreateFactService();
         }
 
         protected override string LocalResourceFile
@@ -77,6 +63,19 @@ namespace FamilyTreeProject.Dnn.Services
             }
             treeViewModel.IndividualCount = _individualService.Get(tree.TreeId).Count();
             treeViewModel.FamilyCount = _familyService.Get(tree.TreeId).Count();
+            treeViewModel.FactCount = _factService.Get(tree.TreeId).Count();
+
+            if (tree.ImageId == -1)
+            {
+                treeViewModel.ImageUrl = "DesktopModules/FTP/FamilyTreeProject/Images/no-image-thumb.png";
+            }
+            else
+            {
+                var file = FileManager.Instance.GetFile(tree.ImageId);
+                treeViewModel.ImageUrl = (file.PortalId == -1) 
+                                            ? Globals.HostPath + file.RelativePath
+                                            : PortalSettings.HomeDirectory + file.RelativePath;
+            }
 
             return treeViewModel;
         }
@@ -94,11 +93,11 @@ namespace FamilyTreeProject.Dnn.Services
         [HttpGet]
         public HttpResponseMessage GetTrees()
         {
+            var settingsViewModel = new SettingsViewModel(ActiveModule);
+
             return GetEntities(() =>
                         {
-                            var owner = ActiveModule.ModuleSettings.GetValueOrDefault(SettingsController.OwnerKey, "user");
-
-                            var trees = (owner == "user")
+                            var trees = (settingsViewModel.Owner == "user")
                                         ? _treeService.Get().Where(t => t.OwnerId == PortalSettings.UserId) 
                                         : _treeService.Get().Where(t => t.OwnerId == ActiveModule.ModuleID);
                             return trees;
@@ -111,6 +110,8 @@ namespace FamilyTreeProject.Dnn.Services
         [HttpPost]
         public HttpResponseMessage SaveTree(TreeViewModel viewModel)
         {
+            var settingsViewModel = new SettingsViewModel(ActiveModule);
+
             Tree tree;
 
             if (viewModel.TreeId == -1)
@@ -121,7 +122,9 @@ namespace FamilyTreeProject.Dnn.Services
                                     Name = viewModel.Name,
                                     Title = viewModel.Title,
                                     Description = viewModel.Description,
-                                    OwnerId = PortalSettings.UserId
+                                    OwnerId = (settingsViewModel.Owner == "user") 
+                                                ? UserInfo.UserID
+                                                : ActiveModule.ModuleID
                                 };
                 _treeService.Add(tree);
             }
@@ -131,6 +134,11 @@ namespace FamilyTreeProject.Dnn.Services
                 tree.Description = viewModel.Description;
                 tree.Name = viewModel.Name;
                 tree.Title = viewModel.Title;
+                if (viewModel.ImageId > 0)
+                {
+                    tree.ImageId = viewModel.ImageId;
+                }
+                _treeService.Update(tree);
             }
 
             var response = new
@@ -146,122 +154,14 @@ namespace FamilyTreeProject.Dnn.Services
         [IFrameSupportedValidateAntiForgeryToken]
         public Task<HttpResponseMessage> UploadTree()
         {
-            var request = Request;
-            FileUploadViewModel result = null;
-
-            if (!request.Content.IsMimeMultipartContent())
-            {
-                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
-            }
-
-            var provider = new MultipartMemoryStreamProvider();
-
-            // local references for use in closure
-            var currentSynchronizationContext = SynchronizationContext.Current;
-            var userInfo = UserInfo;
-            var overwrite = false;
-            var task = request.Content.ReadAsMultipartAsync(provider)
-                .ContinueWith(o =>
-                {
-                    var fileName = string.Empty;
-                    Stream stream = null;
-
-                    foreach (var item in provider.Contents)
-                    {
-                        var name = item.Headers.ContentDisposition.Name;
-                        switch (name.ToLowerInvariant())
-                        {
-                            case "\"overwrite\"":
-                                bool.TryParse(item.ReadAsStringAsync().Result, out overwrite);
-                                break;
-                            case "\"postfile\"":
-                                fileName = item.Headers.ContentDisposition.FileName.Replace("\"", "");
-                                if (fileName.IndexOf("\\", StringComparison.Ordinal) != -1)
-                                {
-                                    fileName = Path.GetFileName(fileName);
-                                }
-                                if (Regex.Match(fileName, "[\\\\/]\\.\\.[\\\\/]").Success == false)
-                                {
-                                    stream = item.ReadAsStreamAsync().Result;
-                                }
-                                break;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(fileName) && stream != null)
-                    {
-                        // The SynchronizationContext keeps the main thread context. Send method is synchronous
-                        currentSynchronizationContext.Send(
-                            delegate
-                            {
-                                result = UploadTree(stream, userInfo, fileName, overwrite);
-                            },
-                            null
-                        );
-                    }
-
-                    var mediaTypeFormatter = new JsonMediaTypeFormatter();
-                    mediaTypeFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/plain"));
-
-                    return Request.CreateResponse(HttpStatusCode.OK, result, mediaTypeFormatter, "text/plain");
-                });
-
-            return task;
+            return UploadFileInternal((result, file) =>
+                                        {
+                                            //Parse tree
+                                            var importer = new GEDCOMImporter();
+                                            var settingsViewModel = new SettingsViewModel(ActiveModule);
+                                            var ownerId = (settingsViewModel.Owner == "user") ? UserInfo.UserID : ActiveModule.ModuleID;
+                                            result.TreeId = importer.Import(file.PhysicalPath, ownerId);
+                                        });
         }
-
-        private FileUploadViewModel UploadTree(Stream stream, UserInfo user, string fileName, bool overwrite)
-        {
-            var result = new FileUploadViewModel();
-            try
-            {
-                var extension = Path.GetExtension(fileName).ValueOrEmpty().Replace(".", "");
-                result.FileIconUrl = IconController.GetFileIconUrl(extension);
-
-                if (string.IsNullOrEmpty(extension) || !Host.AllowedExtensionWhitelist.IsAllowedExtension(extension))
-                {
-                    result.Message = LocalizeString("ExtensionNotAllowed");
-                    return result;
-                }
-
-                var folderManager = FolderManager.Instance;
-
-                // Check if this is a User Folder                
-                var folderInfo = folderManager.GetUserFolder(user);
-
-                IFileInfo file;
-
-                if (!overwrite && FileManager.Instance.FileExists(folderInfo, fileName, true))
-                {
-                    result.Message = LocalizeString("AlreadyExists");
-                    result.AlreadyExists = true;
-                    file = FileManager.Instance.GetFile(folderInfo, fileName, true);
-                    result.FileId = file.FileId;
-                }
-                else
-                {
-                    file = FileManager.Instance.AddFile(folderInfo, fileName, stream, true, false, "text/plain", user.UserID);
-                    result.FileId = file.FileId;
-
-                    //Parse tree
-                    var importer = new GEDCOMImporter();
-                    result.TreeId = importer.Import(file.PhysicalPath, user.UserID);
-                }
-
-                var path = FileManager.Instance.GetUrl(file);
-                result.Orientation = Orientation.Vertical;
-
-                result.Path = result.FileId > 0 ? path : string.Empty;
-                result.FileName = fileName;
-
-                return result;
-            }
-            catch (Exception exe)
-            {
-                Logger.Error(exe);
-                result.Message = exe.Message;
-                return result;
-            }
-        }
-
     }
 }

@@ -12,22 +12,38 @@
  * @module components/individualList/individualList
  * @requires knockout, config, text!./individualList.html
  */
-define("components/individualList/individualList", ["knockout", "config", "text!./individualList.html"], function(ko, config, htmlString) {
+define("components/individualList/individualList",
+        ["knockout", "config", "text!./individualList.html", "individual"],
+        function (ko, config, htmlString, individualFactory) {
 
-    var IndividualListViewModel = function(params, componentInfo) {
+    /**
+     * Provides the Individual List View Model for the Family Tree Project
+     *
+     * @constructor 
+     * @param params - the parameters passed in from the component markup
+     */
+    // ReSharper disable once InconsistentNaming
+    var IndividualListViewModel = function(params) {
         var self = this;
         var settings = config.settings;
 
         self.resx = config.resx;
 
-        self.searchText = ko.observable("");
+        self.activePanel = params.activePanel;
         self.treeId = params.treeId;
+        self.selectedIndividualId = params.selectedIndividualId;
 
         self.individuals = ko.observableArray([]);
 
+        self.searchText = ko.observable("");
         self.totalResults = ko.observable(0);
         self.pageSize = ko.observable(settings.pageSize);
-        self.pageIndex = ko.observable(0)
+        self.pageIndex = ko.observable(0);
+
+        var findIndividuals = function () {
+            self.pageIndex(0);
+            self.getIndividuals();
+        };
 
         self.searchText.subscribe(function () {
             findIndividuals();
@@ -36,11 +52,6 @@ define("components/individualList/individualList", ["knockout", "config", "text!
         self.pageSize.subscribe(function() {
             findIndividuals();
         });
-
-        var findIndividuals = function() {
-            self.pageIndex(0);
-            self.getIndividuals();
-        };
 
         self.addIndividual = function() {
 
@@ -54,13 +65,19 @@ define("components/individualList/individualList", ["knockout", "config", "text!
                 pageSize: self.pageSize
             };
 
-            config.individualService().getEntities("GetIndividuals",
-                params,
-                self.individuals,
-                function () {
-                    return new IndividualViewModel(self);
-                },
-                self.totalResults
+            config.individualService().get("GetIndividuals", params,
+                function(data) {
+                    if (typeof data !== "undefined" && data != null) {
+                        self.individuals.removeAll();
+                        var results = data.results;
+                        for (var i = 0; i < results.length; i++) {
+                            var result = results[i];
+                            self.individuals.push(individualFactory(result));
+                        }
+
+                        self.totalResults(data.total);
+                    }
+                }
             );
         };
 
@@ -68,47 +85,17 @@ define("components/individualList/individualList", ["knockout", "config", "text!
             self.getIndividuals();
         }
 
-        ko.components.register("pager", { require: "components/pager/pager" });
+        self.viewIndividual = function (data) {
+            self.selectedIndividualId(data.individualId());
+            self.activePanel(config.settings.familyGroupPanel);
+        }
+
+        if (!ko.components.isRegistered("pager")) {
+            ko.components.register("pager", { require: "components/pager/pager" });
+        }
 
         self.searchText('');
         self.getIndividuals();
-
-    }
-
-    var IndividualViewModel = function(parentViewModel) {
-        var self = this;
-        var settings = config.settings;
-
-        self.resx = config.resx;
-
-        self.parentViewModel = parentViewModel;
-        self.rootViewModel = parentViewModel.rootViewModel;
-
-        self.name = ko.observable('');
-        self.birth = ko.observable('');
-        self.death = ko.observable('');
-
-        self.canEdit = ko.observable(false);
-        self.selected = ko.observable(false);
-
-        self.deleteIndividual = function(data) {
-
-        }
-
-        self.editIndividual = function (data) {
-
-        }
-
-        self.load = function (data) {
-            self.canEdit(false);
-            self.name(data.lastName + ", " + data.firstName);
-            self.birth(data.birth);
-            self.death(data.death);
-        };
-
-        self.toggleSelected = function () {
-            self.selected(!self.selected());
-        };
     }
 
     // Return component definition

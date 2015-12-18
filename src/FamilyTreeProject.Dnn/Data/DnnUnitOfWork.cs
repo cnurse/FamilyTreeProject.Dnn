@@ -8,6 +8,7 @@
 
 using System;
 using System.Collections.Generic;
+using DotNetNuke.Data;
 using DotNetNuke.Data.PetaPoco;
 using Naif.Core.Caching;
 using Naif.Data;
@@ -21,6 +22,11 @@ namespace FamilyTreeProject.Dnn.Data
         private readonly Database _database;
         private readonly Dictionary<Type, IMapper> _mappers;
 
+        private string GetTableName(string tableName)
+        {
+            return DataProvider.Instance().ObjectQualifier + "FTP_" + tableName;
+        }
+
         public DnnUnitOfWork(string connectionStringName, ICacheProvider cache)
         {
             _database = new Database(connectionStringName);
@@ -29,10 +35,11 @@ namespace FamilyTreeProject.Dnn.Data
                             {
                                 {
                                     typeof (Tree), CreateMapper<Tree>()
-                                                        .TableName("Trees")
-                                                        .PrimaryKey("TreeId")
-                                                        .Property(a => a.TreeId, "TreeId")
+                                                        .TableName(GetTableName("Trees"))
+                                                        .PrimaryKey("TreeID")
+                                                        .Property(a => a.TreeId, "TreeID")
                                                         .Property(a => a.HomeIndividualId, "HomeIndividualID")
+                                                        .Property(a => a.ImageId, "ImageID")
                                                         .Property(a => a.LastViewedIndividualId, "LastViewedIndividualID")
                                                         .Property(a => a.Name, "Name")
                                                         .Property(a => a.OwnerId, "OwnerID")
@@ -41,7 +48,7 @@ namespace FamilyTreeProject.Dnn.Data
                                 },
                                 {
                                     typeof (Repository), CreateMapper<Repository>()
-                                                            .TableName("Repositories")
+                                                            .TableName(GetTableName("Repositories"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_Repositories")
                                                             .Scope("TreeId")
@@ -53,7 +60,7 @@ namespace FamilyTreeProject.Dnn.Data
                                 },
                                 {
                                     typeof (Source), CreateMapper<Source>()
-                                                            .TableName("Sources")
+                                                            .TableName(GetTableName("Sources"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_Sources")
                                                             .Scope("TreeId")
@@ -66,7 +73,7 @@ namespace FamilyTreeProject.Dnn.Data
                                 },
                                 {
                                     typeof (Citation), CreateMapper<Citation>()
-                                                            .TableName("Citations")
+                                                            .TableName(GetTableName("Citations"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_Citations")
                                                             .Scope("TreeId")
@@ -81,7 +88,7 @@ namespace FamilyTreeProject.Dnn.Data
                                 },
                                 {
                                     typeof (Note), CreateMapper<Note>()
-                                                            .TableName("Notes")
+                                                            .TableName(GetTableName("Notes"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_Notes")
                                                             .Scope("TreeId")
@@ -93,7 +100,7 @@ namespace FamilyTreeProject.Dnn.Data
                                 },
                                 {
                                     typeof (MultimediaLink), CreateMapper<MultimediaLink>()
-                                                            .TableName("MultimediaLinks")
+                                                            .TableName(GetTableName("MultimediaLinks"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_MultimediaLinks")
                                                             .Scope("TreeId")
@@ -107,7 +114,7 @@ namespace FamilyTreeProject.Dnn.Data
                                 },
                                 {
                                     typeof (Individual), CreateMapper<Individual>()
-                                                            .TableName("Individuals")
+                                                            .TableName(GetTableName("Individuals"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_Individuals")
                                                             .Scope("TreeId")
@@ -118,11 +125,11 @@ namespace FamilyTreeProject.Dnn.Data
                                                             .Property(a => a.Sex, "Sex")
                                                             .Property(a => a.FatherId, "FatherID")
                                                             .Property(a => a.MotherId, "MotherID")
-
+                                                            .Property(a => a.ImageId, "ImageID")
                                 },
                                 {
                                     typeof (Family), CreateMapper<Family>()
-                                                            .TableName("Families")
+                                                            .TableName(GetTableName("Families"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_Families")
                                                             .Scope("TreeId")
@@ -133,7 +140,7 @@ namespace FamilyTreeProject.Dnn.Data
                                 },
                                 {
                                     typeof(Fact), CreateMapper<Fact>()
-                                                            .TableName("Facts")
+                                                            .TableName(GetTableName("Facts"))
                                                             .PrimaryKey("ID")
                                                             .CacheKey("FTP_Facts")
                                                             .Scope("TreeId")
@@ -162,7 +169,7 @@ namespace FamilyTreeProject.Dnn.Data
             return new FluentMapper<T>();
         }
 
-        public IRepository<TModel> GetRepository<TModel>() where TModel : class
+        public Naif.Data.IRepository<TModel> GetRepository<TModel>() where TModel : class
         {
             var mapper = _mappers[typeof (TModel)];
             var rep = new PetaPocoRepository<TModel>(_database, mapper);

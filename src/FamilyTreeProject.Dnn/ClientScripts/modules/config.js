@@ -12,7 +12,124 @@
  * @module config
  * @requires dnn.utility.js
  */
-define("config", ["js!dnnUtility"], function () {
+define("config", [], function () {
+
+    // ReSharper disable once InconsistentNaming
+    var Services = function () {
+        var self = this;
+
+        var isLoaded = false;
+        var loadingBarId;
+        var serviceController = "";
+        var serviceFramework;
+        var baseServicepath;
+
+        var loadingBar = function (loadingBarId) {
+            if (isLoaded) return;
+            var loadingbar = $(loadingBarId);
+            var progressbar = $(loadingBarId + ' > div');
+            var width = loadingbar.width();
+            loadingbar.show();
+            progressbar.css({ width: 0 }).animate({ width: 0.75 * width }, 300, 'linear', function () {
+                var checkloaded = function () {
+                    if (isLoaded) {
+                        isLoaded = false;
+                        clearTimeout(checkloaded);
+                        checkloaded = null;
+                        progressbar.animate({ width: width }, 100, 'linear', function () {
+                            loadingbar.hide();
+                        });
+                    }
+                    else {
+                        setTimeout(checkloaded, 20);
+                    }
+                };
+                checkloaded();
+            });
+        };
+
+        var call = function (httpMethod, url, params, onSuccess, onFailure, loading, sync, silence) {
+            var options = {
+                url: url,
+                beforeSend: serviceFramework.setModuleHeaders,
+                type: httpMethod,
+                async: sync === false,
+                success: function (data) {
+                    if (loadingBarId && !silence) isLoaded = true;
+                    if (typeof loading === "function") {
+                        loading(false);
+                    }
+
+                    if (typeof onSuccess === "function") {
+                        onSuccess(data || {});
+                    }
+                },
+                error: function (xhr, status, err) {
+                    if (loadingBarId && !silence) isLoaded = true;
+                    if (typeof loading === "function") {
+                        loading(false);
+                    }
+
+                    if (typeof onFailure === "function") {
+                        if (xhr) {
+                            onFailure(xhr, status, err);
+                        }
+                        else {
+                            onFailure(null, "Unknown error", "");
+                        }
+                    }
+                }
+            };
+
+            if (httpMethod === "GET") {
+                options.data = params;
+            }
+            else {
+                options.contentType = "application/json; charset=UTF-8";
+                options.data = JSON.stringify(params);
+                options.dataType = "json";
+            }
+
+            if (typeof loading === "function") {
+                loading(true);
+            }
+
+            if (loadingBarId && !silence) loadingBar(loadingBarId);
+            return $.ajax(options);
+        };
+
+        var get = function (method, params, onSuccess, onFailure, loading) {
+            var self = this;
+            var url = baseServicepath + self.serviceController + "/" + method;
+            return call("GET", url, params, onSuccess, onFailure, loading, false, false);
+        };
+
+        var init = function (settings) {
+            loadingBarId = settings.loadingBarId;
+            serviceFramework = settings.servicesFramework;
+            baseServicepath = serviceFramework.getServiceRoot(settings.servicePath);
+        }
+
+        var post = function (method, params, onSuccess, onFailure, loading) {
+            var self = this;
+            var url = baseServicepath + self.serviceController + "/" + method;
+            return call("POST", url, params, onSuccess, onFailure, loading, false, false);
+        };
+
+        var put = function (method, params, onSuccess, onFailure, loading) {
+            var self = this;
+            var url = baseServicepath + self.serviceController + "/" + method;
+            return call("PUT", url, params, onSuccess, onFailure, loading, false, false);
+        };
+
+        return {
+            get: get,
+            init: init,
+            post: post,
+            put: put,
+            serviceController: serviceController
+        }
+    }
 
     /**
      *
@@ -26,7 +143,7 @@ define("config", ["js!dnnUtility"], function () {
         self.sfSettings = {};
 
         // ReSharper disable once UseOfImplicitGlobalInFunctionScope
-        var sf = dnn.sf();
+        var services = new Services();
 
         /**
          * Initialize the Configuration module
@@ -65,7 +182,7 @@ define("config", ["js!dnnUtility"], function () {
                 }
             };
 
-            sf.init(sfSettings);
+            services.init(sfSettings);
         };
 
         /**
@@ -73,8 +190,8 @@ define("config", ["js!dnnUtility"], function () {
          *
          */
         self.fileService = function() {
-            sf.serviceController = "File";
-            return sf;
+            services.serviceController = "File";
+            return services;
         }
 
         /**
@@ -82,17 +199,26 @@ define("config", ["js!dnnUtility"], function () {
          *
          */
         self. individualService = function () {
-            sf.serviceController = "Individual";
-            return sf;
+            services.serviceController = "Individual";
+            return services;
         };
+
+        /**
+         * The settings REST Service
+         *
+         */
+        self.settingsService = function () {
+            services.serviceController = "Settings";
+            return services;
+        }
 
         /**
          * The tree REST Service
          *
          */
         self.treeService = function () {
-            sf.serviceController = "Tree";
-            return sf;
+            services.serviceController = "Tree";
+            return services;
         };
     };
 

@@ -5,6 +5,7 @@
 @tab_background_color: #eee;
 @selectedTab_color: #0087c6;
 @selectedTab_background_color: #fff;
+@card_background_color: #fff;
 
 @panel_background_color: #fff;
 
@@ -26,6 +27,7 @@
 @heading_fontSize: 28px;
 @subheading_fontSize: 18px;
 @closeButton_fontSize: 28px;
+@tabs_fontSize: 16px;
 
 @width: 100%;
 @panel_OuterMargin: 20px;
@@ -37,13 +39,23 @@
 @headingCenter_width: 40%;
 @panelLeft_width: 65%;
 @panelRight_width: 22%;
+@card_InnerMargin: 5px;
+@card_OuterMargin: 5px;
 
 @header_height:40px;
 @panel_minHeight: 500px;
+@card_minHeight:40px;
+
+@mainImage_width: 250px;
+@cardImage_width: 40px;
 
 .ftpContainer {
     border: solid 1px @border_color;
     width: @width;
+}
+
+.ftpContainer a {
+    cursor: pointer;
 }
 
 .ftpContainer select {
@@ -67,9 +79,8 @@
     float: right;
 }
 
-//Heading
-
-.ftpContainer .ftpHeading {
+//Header
+.ftpContainer .ftpHeader {
     height: @header_height;
     padding-top: 15px;
     padding-bottom: 10px;
@@ -78,49 +89,49 @@
     box-shadow: 0px 2px 2px @boxShadow_color;
 }
 
-.ftpContainer .ftpHeading > div {
+.ftpContainer .ftpHeader > div {
     font-size: @heading_fontSize;
     margin-left: @panel_OuterMargin;
     float: left;
     width: @headingCenter_width;
 }
 
-.ftpContainer .ftpHeading > div:first-child {
+.ftpContainer .ftpHeader > div:first-child {
     margin-top:10px;
     width: @headingLeft_width;
 }
 
-.ftpContainer .ftpHeading > div:last-child {
+.ftpContainer .ftpHeader > div:last-child {
     margin-top:5px;
     float: right;
     width: @headingRight_width;
 }
 
-.ftpContainer .ftpHeading > div > div {
+.ftpContainer .ftpHeader > div > div {
     padding: 6px;
     font-size: 16px;
     float:left;
     min-width: 50px;
 }
 
-.ftpContainer .ftpHeading > div > div.ftpButtons {
+.ftpContainer .ftpHeader > div > div.ftpButtons {
     padding-top: 3px;
 }
 
-.ftpContainer .ftpHeading .ftpLabel {
+.ftpContainer .ftpHeader .ftpLabel {
     margin-top: 5px;
 }
 
-.ftpContainer .ftpHeading > div > div > span {
+.ftpContainer .ftpHeader > div > div > span {
     padding-top: 5px;
     display: inline-block;
 }
 
-.ftpContainer .ftpHeading select {
+.ftpContainer .ftpHeader select {
     margin-top: -2px;
 }
 
-.ftpContainer .ftpHeading a.ftpIcon {
+.ftpContainer .ftpHeader a.ftpIcon {
     float: right;
     font-size: @closeButton_fontSize;
     margin-right: @panel_OuterMargin;
@@ -128,7 +139,6 @@
 }
 
 //Body
-
 .ftpContainer .ftpBody {
     margin: @panel_OuterMargin;
     background-color: @panel_background_color;
@@ -138,7 +148,6 @@
 }
 
 //Menu
-
 .ftpContainer .ftpMenu {
     position: relative;
     overflow: hidden;
@@ -166,6 +175,7 @@
     width: @tab_width;
     padding: 12px @panel_InnerMargin 10px @panel_InnerMargin;
     cursor: pointer;
+    font-size: @tabs_fontSize;
 }
 
 .ftpContainer .ftpMenu ul > li.selected {
@@ -179,7 +189,7 @@
 
 
 //Panels
-.ftpContainer .ftpPanel .ftpTreeViewLeft {
+.ftpContainer .ftpPanel .ftpSubPanelLeft {
     float: left;
     margin: @panel_OuterMargin;
     padding: @panel_InnerMargin;
@@ -188,13 +198,19 @@
     min-height: @panel_minHeight;
 }
 
-.ftpContainer .ftpPanel .ftpTreeViewRight {
+.ftpContainer .ftpPanel .ftpSubPanelRight {
     float: right;
     margin: @panel_OuterMargin;
     padding: @panel_InnerMargin;
     border: 1px solid @treeViewPanelRight_border_color;
     width: @panelRight_width;
     min-height: @panel_minHeight;
+    border-radius: @border_radius;
+    background-color: @treeViewPanelRight_background_color;
+}
+
+.ftpContainer .ftpPanel .ftpHeading {
+    font-size: @heading_fontSize;
 }
 
 .ftpContainer .ftpPanel .ftpSubHeading {
@@ -207,15 +223,105 @@
     height: 25px;
 }
 
-//TreeView Panel
-
-.ftpContainer #treeview-panel .ftpTreeViewRight {
-    border-radius: @border_radius;
-    background-color: @treeViewPanelRight_background_color;
+.ftpContainer .ftpSubPanelLeft .ftpImage {
+    width: @mainImage_width;
+    float: left;
+    padding-bottom: @panel_InnerMargin;
+    padding-right: @panel_InnerMargin;
+    position: relative; 
+    left: 0px; 
+    top: 0px;
 }
 
-//Search Panel
+.ftpContainer .ftpSubPanelLeft .ftpImage > img{
+    position: relative; 
+    cursor: pointer;
+    left: 0px; 
+    top: 0px;
+}
 
+.ftpContainer .ftpSubPanelLeft .ftpImage > div{
+    position: absolute; 
+    left: 50px; 
+    top: 50px;
+    font-size:36px;
+    color: #aaa;
+}
+
+.ftpContainer .ftpSubPanelLeft .ftpTitle {
+    font-size: @heading_fontSize;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.ftpContainer .ftpSubPanelLeft .ftpIcon {
+    font-size: @heading_fontSize;
+    float: right;
+    cursor:pointer;
+}
+
+//TreeView Panel
+
+//Group View Panel
+
+//Individual Card View
+.ftpContainer .ftpCard {
+    padding: @card_InnerMargin;
+    margin: @card_OuterMargin;
+    background-color: @card_background_color;
+    border: 1px solid @border_color;
+    min-height: @card_minHeight;
+    border-radius: @border_radius;
+    cursor:pointer;
+}
+
+.ftpContainer .ftpCard.ftpAdd {
+    background-color: transparent;
+    border: 2px dashed @border_color;
+}
+
+.ftpContainer .ftpCard .ftpImage {
+    width: @cardImage_width;
+    float: left;
+    padding-right: @card_InnerMargin;
+    position: relative; 
+    left: 0px; 
+    top: 0px;
+}
+
+.ftpContainer .ftpCard .ftpImage > img{
+    position: relative; 
+    left: 0px; 
+    top: 0px;
+    max-width: 30px;
+    max-height: 40px;
+}
+
+.ftpContainer .ftpCard .ftpImage > div{
+    position: absolute; 
+    left: 50px; 
+    top: 50px;
+    font-size:36px;
+    color: #aaa;
+}
+
+.ftpContainer .ftpCard .ftpTitle {
+    font-size: @tabs_fontSize;
+}
+
+.ftpContainer .ftpCard.ftpAdd .ftpTitle {
+    padding-top: 10px;
+}
+
+.ftpContainer .ftpCard .ftpIcon {
+    font-size: @tabs_fontSize;
+    float: right;
+    cursor:pointer;
+}
+
+
+
+//Search Panel
 .ftpContainer .ftpSearchPanel {
     padding: @panel_InnerMargin;
     border-bottom: 1px solid @border_color;
@@ -234,7 +340,6 @@
 }
 
 //Tables
-
 .ftpContainer .ftpTable {
     width: 100%;
     border-collapse: collapse;
@@ -345,7 +450,6 @@
 }
 
 //Buttons
-
 .ftpContainer .ftpButton {
     background: @otherBtn_background_color;
     color: @otherBtn_color;
@@ -388,7 +492,6 @@
 }
 
 //Loading Bar
-
 .ftpContainer #loadingbar {
     top: 0;
     left: 0;

@@ -8,8 +8,6 @@
 
 using System.Net.Http;
 using System.Web.Http;
-using DotNetNuke.Collections;
-using DotNetNuke.Entities.Modules;
 using DotNetNuke.Security;
 using DotNetNuke.Web.Api;
 using FamilyTreeProject.Dnn.ViewModels;
@@ -20,24 +18,13 @@ namespace FamilyTreeProject.Dnn.Services
     [DnnModuleAuthorize(AccessLevel = SecurityAccessLevel.Edit)]
     public class SettingsController : DnnApiController
     {
-        public const string OwnerKey = "FTP_Owner";
-
         [HttpGet]
         public HttpResponseMessage GetSettings()
         {
-            var viewModel = new SettingsViewModel
-                                    {
-                                        Owner = ActiveModule.ModuleSettings.GetValueOrDefault(OwnerKey, "user")
-                                    };
-
             var response = new
-            {
-                success = true,
-                data = new
-                        {
-                            results = viewModel
-                        }
-            };
+                            {
+                                results = new SettingsViewModel(ActiveModule)
+                            };
 
             return Request.CreateResponse(response);
         }
@@ -51,7 +38,7 @@ namespace FamilyTreeProject.Dnn.Services
         [ValidateAntiForgeryToken]
         public HttpResponseMessage SaveSettings(SettingsViewModel settings)
         {
-            ModuleController.Instance.UpdateModuleSetting(ActiveModule.ModuleID, OwnerKey, settings.Owner.ToLowerInvariant());
+            settings.Save(ActiveModule);
 
             var response = new
                             {

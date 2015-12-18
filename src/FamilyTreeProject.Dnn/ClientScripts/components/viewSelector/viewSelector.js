@@ -14,12 +14,13 @@
  */
 define("components/viewSelector/viewSelector", ["knockout", "config", "text!./viewSelector.html"], function(ko, config, htmlString) {
 
-    function ViewSelectorViewModel(params, componentInfo) {
+    function viewSelectorViewModel(params) {
         var self = this;
         self.resx = config.resx;
 
         self.activePanel = params.activePanel;
         self.panels = params.panels;
+        self.selectedIndividualId = params.selectedIndividualId;
 
         var menuClick = function (panel) {
             if (self.activePanel() === panel) {
@@ -33,10 +34,6 @@ define("components/viewSelector/viewSelector", ["knockout", "config", "text!./vi
             listItem.parent().children().removeClass("selected");
             listItem.addClass("selected");
         });
-
-        self.selectAncestorView = function (data, e) {
-            menuClick(self.panels.ancestors);
-        };
 
         self.selectFamilyGroupView = function (data, e) {
             menuClick(self.panels.familyGroup);
@@ -52,5 +49,5 @@ define("components/viewSelector/viewSelector", ["knockout", "config", "text!./vi
     }
 
     // Return component definition
-    return { viewModel: ViewSelectorViewModel, template: htmlString };
+    return { viewModel: viewSelectorViewModel, template: htmlString };
 });

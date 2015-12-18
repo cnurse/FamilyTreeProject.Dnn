@@ -16,25 +16,9 @@ namespace FamilyTreeProject.Dnn.ViewModels
         public FamilyViewModel(Family family)
         {
             Id = family.Id;
-
             HusbandId = family.HusbandId.GetValueOrDefault(0);
-            //if (family.Husband != null)
-            //{
-            //    Husband = new IndividualViewModel(family.Husband, 1, 0, true);
-            //}
-
             WifeId = family.WifeId.GetValueOrDefault(0);
-            //if (family.Wife != null)
-            //{
-            //    Wife = new IndividualViewModel(family.Wife, 1, 0, true);
-            //}
-
             Children = new List<IndividualViewModel>();
-            //foreach (var child in family.Children)
-            //{
-            //    Children.Add(new IndividualViewModel(child, 0, 0, false));
-            //}
-
         }
 
         [JsonProperty("id")]

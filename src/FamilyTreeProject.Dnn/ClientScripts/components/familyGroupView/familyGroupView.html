@@ -1,3 +1,48 @@
-<div>
-    <h1>Family Group View</h1>
+<div class="ftpPanel" id="familyGroupView-panel">
+    <div class="ftpSubPanelLeft">
+        <!-- ko component: {
+            name: "individualDetail",
+            params: {
+                individual: individual,
+                treeId: treeId,
+                refresh: getIndividual
+            }
+        } -->
+        <!-- /ko -->
+    </div>
+    <div class="ftpSubPanelRight">
+        <div class="ftpHeading">
+            <span data-bind="text:resx.family"></span>
+        </div>
+        <div class="ftpSubHeading">
+            <span data-bind="text:resx.parents"></span>
+        </div>
+        <!-- ko component: {
+            name: "individualCard",
+            params: {
+                individual: father,
+                onSelected: viewIndividual
+            }
+        } -->
+        <!-- /ko -->
+        <!-- ko component: {
+            name: "individualCard",
+            params: {
+                individual: mother,
+                onSelected: viewIndividual
+            }
+        } -->
+        <!-- /ko -->
+        <div class="ftpSubHeading">
+            <span data-bind="text:resx.spouseChildren"></span>
+        </div>
+        <!-- ko component: {
+            name: "individualCard",
+            params: {
+                individual: spouse,
+                onSelected: viewIndividual
+            }
+        } -->
+        <!-- /ko -->
+    </div>
 </div>

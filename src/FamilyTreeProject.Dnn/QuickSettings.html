@@ -1,7 +1,4 @@
-﻿[JavaScript:{ path: "~/DesktopModules/Ftp/FamilyTreeProject/ClientScripts/quickSettings.js"}]
-
-
-<div id="FTP-QS-[ModuleContext:ModuleId]" class="dnnForm">
+﻿<div id="FTP-QS-[ModuleContext:ModuleId]" class="dnnForm">
     <div class="dnnFormMessage dnnFormInfo">
         [Resx: {key : "QuickSettings" }]
     </div>
@@ -19,19 +16,10 @@
         var moduleId = parseInt("[ModuleContext:ModuleId]");
 
         $(document).ready(function() {
-            var resx = {
-
-            };
-
-            var options = {
-                moduleId: moduleId,
-                servicesFramework: $.ServicesFramework(moduleId),
-                baseServicepath: "FTP/FamilyTreeProject"
-            };
-
-            var quickSettings = new ftp.QuickSettings($, ko, options, resx);
-
-            quickSettings.init("#FTP-QS-" + moduleId);
+            //Bootstrap QuickSettings
+            require(["quickSettings", "domReady!"], function (qs) {
+                qs.init("#FTP-QS-" + moduleId);
+            });
         });
     })(jQuery);
 </script>

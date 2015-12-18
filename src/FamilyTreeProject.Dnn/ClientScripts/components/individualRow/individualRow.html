@@ -1,0 +1,16 @@
+﻿<tr>
+    <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected}">
+        <span data-bind="text: name"></span>
+    </td>
+    <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected}">
+        <span data-bind="text: birth"></span>
+    </td>
+    <td data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected }">
+        <span data-bind="text: death"></span>
+    </td>
+    <td width="100px" data-bind="event: { mouseover: toggleSelected, mouseout: toggleSelected }">
+        <a class="ftpIcon" data-bind="visible: selected() && !canEdit(), click: selectIndividual"><i class="fa fa-search"></i></a>
+        <a class="ftpIcon" data-bind="visible: selected() && canEdit(), click: editIndividual"><i class="fa fa-pencil"></i></a>
+        <a class="ftpIcon" data-bind="visible: selected() && canEdit(), click: deleteIndividual"><i class="fa fa-trash-o"></i></a>
+    </td>
+</tr>

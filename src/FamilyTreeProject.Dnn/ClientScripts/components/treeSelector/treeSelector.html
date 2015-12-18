@@ -5,16 +5,22 @@
         <select data-bind="options: trees, optionsText: 'name', optionsValue: 'treeId', value: treeId, valueAllowUnset: true, visible: trees().length > 1"></select>
     </div>
     <div class="ftpButtons">
-        <a class="ftpButton" data-bind="text: resx.uploadTree, click: uploadTree"></a>
-        <a class="ftpButton" data-bind="text: resx.createTree, click: addTree"></a>
+        <a class="ftpButton" data-bind="click: uploadTree">
+            <i class="fa fa-upload"></i>
+            <span data-bind="text: resx.uploadTree"></span>
+        </a>
+        <a class="ftpButton" data-bind="click: addTree">
+            <i class="fa fa-plus"></i>
+            <span data-bind="text: resx.createTree"></span>
+        </a>
     </div>
 </div>
 
 <!-- ko component: {
         name: "editTree",
-        params: { treeId: -1,
+        params: { treeId: ko.observable(-1),
             isVisible: showCreate,
-            title: resx.createTree,
+            dialogTitle: resx.createTree,
             newTreeId: treeId ,
             onSuccess: onTreeCreated
         }
@@ -22,10 +28,10 @@
 <!-- /ko -->
 <!-- ko component: {
         name: "uploadFile",
-        params: { treeId: -1,
-            isVisible: showUpload,
+        params: { isVisible: showUpload,
             title: resx.uploadTree,
-            newTreeId: treeId ,
+            message: resx.uploadTreeMessage,
+            entityId: treeId ,
             onSuccess: onTreeUploaded,
             options: {
                 fileUploadMethod: 'Tree/UploadTree',
