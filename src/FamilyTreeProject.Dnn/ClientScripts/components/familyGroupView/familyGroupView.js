@@ -13,8 +13,8 @@
  * @requires knockout, config, text!./familyGroupView.html
  */
 define("components/familyGroupView/familyGroupView",
-        ["knockout", "config", "text!./familyGroupView.html", "individual"],
-        function (ko, config, htmlString, individualFactory) {
+        ["knockout", "config", "text!./familyGroupView.html", "individual", "family", "fact"],
+        function (ko, config, htmlString, individualFactory, familyFactory, factFactory) {
 
     function familyGroupViewViewModel(params) {
         var self = this;
@@ -22,20 +22,27 @@ define("components/familyGroupView/familyGroupView",
 
         self.treeId = params.treeId;
         self.selectedIndividualId = params.selectedIndividualId;
+        self.showEdit = ko.observable(false);
 
         self.individual = ko.observable(individualFactory(null));
 
         self.father = ko.observable(individualFactory(null, "Male"));
         self.mother = ko.observable(individualFactory(null, "Female"));
 
+        self.facts = ko.observableArray([]);
         self.families = ko.observableArray([]);
+
+        self.editIndividual = function () {
+            self.showEdit(true);
+        }
 
         self.getIndividual = function() {
             var params = {
                 treeId: self.treeId(),
                 id: self.selectedIndividualId(),
                 includeAncestors: 1,
-                includeFamilies: true
+                includeFamilies: true,
+                updateTree: true
             };
 
             config.individualService().get("GetIndividual", params,
@@ -46,6 +53,21 @@ define("components/familyGroupView/familyGroupView",
 
                         self.father(individualFactory(result.father, "Male"));
                         self.mother(individualFactory(result.mother, "Female"));
+
+                        if (typeof result.families !== "undefined" && result.families != null) {
+                            self.families.removeAll();
+                            var families = result.families;
+                            for (var i = 0; i < families.length; i++) {
+                                self.families.push(familyFactory(families[i], result.sex));
+                            }
+                        }
+                        if (typeof result.facts !== "undefined" && result.facts != null) {
+                            self.facts.removeAll();
+                            var facts = result.facts;
+                            for (var i = 0; i < facts.length; i++) {
+                                self.facts.push(factFactory(facts[i]));
+                            }
+                        }
                     }
                 }
             );

@@ -1,33 +1,45 @@
 ﻿<div class="ftpDetail">
     <div>
-        <a class="ftpIcon" data-bind="attr: {title: resx.editIndividual}, click: editIndividual"><i class="fa fa-pencil"></i></a>
-    </div>
-    <div>
         <div class="ftpImage">
             <img data-bind="attr: {src: imageUrl}, click: uploadFile, event: { mouseover: enableButton, mouseout: disableButton}"/>
-            <div data-bind="visible: showUploadButton"><i class="fa fa-camera"></i></div>
+            <div data-bind="visible: showUploadButton"><i class="fa fa-camera"></i>
+            </div>
         </div>
         <div class="ftpTitle" data-bind="text: name"></div>
         <div>
+            <div class="ftpNormal" data-bind="text: sex"></div>
             <div class="ftpNormal" data-bind="text: birth"></div>
             <div class="ftpNormal" data-bind="text: death"></div>
         </div>
     </div>
 </div>
+<div class="ftpFactsList">
+    <div class="ftpSubHeading">
+        <span data-bind="text:resx.facts"></span>
+    </div>
+
+</div>
+<div class="ftpSourcesList">
+    <div class="ftpSubHeading">
+        <span data-bind="text:resx.sources"></span>
+    </div>
+</div>
+
 <!-- ko component: {
-        name: "uploadFile",
-        params: {
-            isVisible: showUpload,
-            title: resx.uploadImage,
-            message: resx.uploadImageMessage,
-            entityId: imageId,
-            onSuccess: onFileUploaded,
-            options: {
-                fileUploadMethod: 'File/UploadFile',
-                extensions: ['png','jpg','gif','jpeg'],
-                width: 600,
-                height:550
-            }
+    name: "uploadFile",
+    params: {
+        isVisible: showUpload,
+        title: resx.uploadImage,
+        message: resx.uploadImageMessage,
+        entityId: imageId,
+        onSuccess: onFileUploaded,
+        options: {
+            fileUploadMethod: 'File/UploadFile',
+            extensions: ['png','jpg','gif','jpeg'],
+            width: 600,
+            height:550
         }
-    } -->
+    }
+} -->
 <!-- /ko -->
+

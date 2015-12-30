@@ -48,6 +48,9 @@ namespace FamilyTreeProject.Dnn.ViewModels
         [JsonProperty("death")]
         public FactViewModel Death { get; set; }
 
+        [JsonProperty("facts")]
+        public List<FactViewModel> Facts { get; set; }
+
         [JsonProperty("families")]
         public List<FamilyViewModel> Families { get; set; }
 
@@ -86,12 +89,12 @@ namespace FamilyTreeProject.Dnn.ViewModels
             FactViewModel fact = null;
             var birth = (from Fact e in ind.Facts
                              where e.FactType == FactType.Birth
-                             select e).SingleOrDefault();
+                             select e).FirstOrDefault();
             if (birth == null)
             {
                 var baptism = (from Fact e in ind.Facts
                                 where e.FactType == FactType.Baptism
-                                select e).SingleOrDefault();
+                                select e).FirstOrDefault();
                 if (baptism != null)
                 {
                     fact = new FactViewModel(baptism);
@@ -110,12 +113,12 @@ namespace FamilyTreeProject.Dnn.ViewModels
             FactViewModel fact = null;
             var death = (from Fact e in ind.Facts
                              where e.FactType == FactType.Death
-                             select e).SingleOrDefault();
+                             select e).FirstOrDefault();
             if (death == null)
             {
                 var burial = (from Fact e in ind.Facts
                                   where e.FactType == FactType.Burial
-                                  select e).SingleOrDefault();
+                                  select e).FirstOrDefault();
                 if (burial != null)
                 {
                     fact = new FactViewModel(burial);

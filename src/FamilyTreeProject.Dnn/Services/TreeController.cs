@@ -35,10 +35,10 @@ namespace FamilyTreeProject.Dnn.Services
             var cache = Util.CreateCacheProvider();
             var unitOfWork = Util.CreateUnitOfWork(cache);
             var serviceFactory = new FamilyTreeServiceFactory(unitOfWork, cache);
-            _treeService = serviceFactory.CreateTreeService();
+            _factService = serviceFactory.CreateFactService();
             _familyService = serviceFactory.CreateFamilyService();
             _individualService = serviceFactory.CreateIndividualService();
-            _factService = serviceFactory.CreateFactService();
+            _treeService = serviceFactory.CreateTreeService();
         }
 
         protected override string LocalResourceFile
@@ -55,11 +55,20 @@ namespace FamilyTreeProject.Dnn.Services
 
             if (tree.HomeIndividualId > -1)
             {
-                treeViewModel.HomeIndividual = new IndividualViewModel(_individualService.Get(tree.HomeIndividualId, tree.TreeId));
+                var homeIndividual = _individualService.Get(tree.HomeIndividualId, tree.TreeId);
+                if (homeIndividual != null)
+                {
+                    treeViewModel.HomeIndividual = new IndividualViewModel(homeIndividual);
+                }
             }
             if (tree.LastViewedIndividualId > -1)
             {
-                treeViewModel.LastViewedIndividual = new IndividualViewModel(_individualService.Get(tree.LastViewedIndividualId, tree.TreeId));
+                var lastViewedIndividual = _individualService.Get(tree.LastViewedIndividualId, tree.TreeId);
+                if (lastViewedIndividual != null)
+                {
+                    treeViewModel.LastViewedIndividual = new IndividualViewModel(lastViewedIndividual);
+                }
+
             }
             treeViewModel.IndividualCount = _individualService.Get(tree.TreeId).Count();
             treeViewModel.FamilyCount = _familyService.Get(tree.TreeId).Count();

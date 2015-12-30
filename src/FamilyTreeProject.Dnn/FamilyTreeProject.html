@@ -80,9 +80,20 @@
             <!-- /ko -->
         </div>
 
+        <div id="mask"></div>
+        <div id="confirmation-dialog" class="dnnFormPopup dnnClear" style="display: none;">
+            <div class="dnnDialogHeader"></div>
+            <div class="dnnDialog"></div>
+            <div class="buttonpanel">
+                <a id="confirmbtn" class="dnnPrimaryAction"></a>
+                <a id="cancelbtn" class="dnnSecondaryAction"></a>
+            </div>
+        </div>
+
         <div id="loadingbar" style="display: none;">
             <div></div>
         </div>
+
     </div>
 </div>
 
@@ -95,22 +106,29 @@
             addFather: '[Resx:{key:"AddFather"}]',
             addIndividual: '[Resx:{key:"AddIndividual"}]',
             addMother: '[Resx:{key:"AddMother"}]',
+            alert: '[Resx:{key:"Alert"}]',
             baptismFormat: '[Resx:{key:"BaptismFormat"}]',
             birth: '[Resx:{key:"Birth"}]',
             birthFormat: '[Resx:{key:"BirthFormat"}]',
             buriedFormat: '[Resx:{key:"BuriedFormat"}]',
             cancel: '[Resx:{key:"Cancel"}]',
+            confirm: '[Resx:{key:"Confirm"}]',
+            createIndividual: '[Resx:{key:"CreateIndividual"}]',
+            createIndividualMessage: '[Resx:{key:"CreateIndividualMessage"}]',
             createTree: '[Resx:{key:"CreateTree"}]',
             createTreeMessage: '[Resx:{key:"CreateTreeMessage"}]',
             death: '[Resx:{key:"Death"}]',
             deathFormat: '[Resx:{key:"DeathFormat"}]',
             description: '[Resx:{key:"Description"}]',
+            deleteIndividualConfirmMessage: '[Resx:{key:"DeleteIndividualConfirmMessage"}]',
             editIndividual: '[Resx:{key:"EditIndividual"}]',
+            editIndividualMessage: '[Resx:{key:"EditIndividualMessage"}]',
             editTree: '[Resx:{key:"EditTree"}]',
             facts: '[Resx:{key:"Facts"}]',
             families: '[Resx:{key:"Families"}]',
             family: '[Resx:{key:"Family"}]',
             familyGroupView: '[Resx:{key:"FamilyGroupView"}]',
+            female: '[Resx:{key:"Female"}]',
             fileUpload: {
                 title:'[Resx:{key:"UploadFile"}]',
                 uploadToFolderLabel:'[Resx:{key:"UploadTo"}]',
@@ -132,29 +150,38 @@
                 tooManyFiles: '[Resx:{key:"TooManyFiles"}]',
                 errorDialogTitle: '[Resx:{key:"ErrorDialogTitle"}]',
                 invalidFileExtensions: '[Resx:{key:"InvalidFileExtensions"}]'
-        },
+            },
             findIndividual: '[Resx:{key:"FindIndividual"}]',
+            firstName: '[Resx:{key:"FirstName"}]',
             homePerson: '[Resx:{key:"HomePerson"}]',
             individualList: '[Resx:{key:"IndividualList"}]',
             individuals: '[Resx:{key:"Individuals"}]',
             individuals_NoPagerFormat: '[Resx:{key:"Individuals_NoPagerFormat"}]',
             individuals_PagerFormat: '[Resx:{key:"Individuals_PagerFormat"}]',
             individualsPageSize: '[Resx:{key:"IndividualsPageSize"}]',
+            lastName: '[Resx:{key:"LastName"}]',
             lastViewed: '[Resx:{key:"LastViewed"}]',
+            male: '[Resx:{key:"Male"}]',
             myFolder: '[Resx:{key:"MyFolder"}]',
             name: '[Resx:{key:"Name"}]',
+            no: '[Resx:{key:"No"}]',
             pager_PageDesc: '[Resx:{key:"Pager_PageDesc"}]',
             parents: '[Resx:{key:"Parents"}]',
             save: '[Resx:{key:"Save"}]',
+            sex: '[Resx:{key:"Sex"}]',
+            sources: '[Resx:{key:"Sources"}]',
+            spouse: '[Resx:{key:"Spouse"}]',
             spouseChildren: '[Resx:{key:"SpouseChildren"}]',
             summary: '[Resx:{key:"Summary"}]',
             title: '[Resx:{key:"Title"}]',
             tree: '[Resx:{key:"Tree"}]',
             treeOverView: '[Resx:{key:"TreeOverView"}]',
+            unknown: '[Resx:{key:"Unknown"}]',
             uploadImage: '[Resx:{key:"UploadImage"}]',
             uploadImageMessage: '[Resx:{key:"UploadImageMessage"}]',
             uploadTree: '[Resx:{key:"UploadTree"}]',
-            uploadTreeMessage: '[Resx:{key:"UploadTreeMessage"}]'
+            uploadTreeMessage: '[Resx:{key:"UploadTreeMessage"}]',
+            yes: '[Resx:{key:"Yes"}]'
         };
 
         var settings = {
@@ -182,8 +209,11 @@
             paths: {
                 "jquery": "modules/jquery.js",
                 "knockout": "modules/knockout.js",
+                "fact": "modules/fact.js",
+                "family": "modules/family.js",
                 "individual": "modules/individual.js",
                 "individualViewModel": "modules/individualViewModel.js",
+                "util": "modules/util.js",
                 "config": "modules/config.js"
             }
         });

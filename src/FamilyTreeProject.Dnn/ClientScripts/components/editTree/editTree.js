@@ -7,7 +7,7 @@
  */
 
 /**
- * Provides a Tree Selector component for the Family Tree Project
+ * Provides a Edit Tree component for the Family Tree Project
  *
  * @module components/editTree/editTree
  * @requires knockout, config, text!./editTree.html
@@ -35,10 +35,6 @@ define("components/editTree/editTree", ["knockout", "config", "text!./editTree.h
             self.title = props.title;
             self.description = props.description;
         }
-
-        self.isAddMode = ko.computed(function() {
-            return self.treeId() === -1;
-        });
 
         self.widget = ko.observable();
 

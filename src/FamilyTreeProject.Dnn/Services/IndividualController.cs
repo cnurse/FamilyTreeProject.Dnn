@@ -28,6 +28,7 @@ namespace FamilyTreeProject.Dnn.Services
         private readonly IFactService _factService;
         private readonly IFamilyService _familyService;
         private readonly IIndividualService _individualService;
+        private readonly ITreeService _treeService;
 
         public IndividualController()
         {
@@ -37,21 +38,33 @@ namespace FamilyTreeProject.Dnn.Services
             _factService = serviceFactory.CreateFactService();
             _familyService = serviceFactory.CreateFamilyService();
             _individualService = serviceFactory.CreateIndividualService();
+            _treeService = serviceFactory.CreateTreeService();
         }
 
-        private FamilyViewModel GetFamilyViewModel(Family family)
+        [HttpPost]
+        public HttpResponseMessage DeleteIndividual(Individual individual)
+        {
+            _individualService.Delete(individual);
+
+            var response = new
+            {
+                id = individual.Id
+            };
+
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        private FamilyViewModel GetFamilyViewModel(Family family, Sex sex)
         {
             var fam = family.Clone();
 
             var familyViewModel = new FamilyViewModel(fam);
 
-            if (familyViewModel.HusbandId > 0)
+            var spouseId = (sex == Sex.Male) ? fam.WifeId.GetValueOrDefault(0) : fam.HusbandId.GetValueOrDefault(0);
+
+            if (spouseId > 0)
             {
-                familyViewModel.Husband = GetIndividualViewModel(_individualService.Get(familyViewModel.HusbandId, fam.TreeId));
-            }
-            if (familyViewModel.WifeId > 0)
-            {
-                familyViewModel.Wife = GetIndividualViewModel(_individualService.Get(familyViewModel.WifeId, fam.TreeId));
+                familyViewModel.Spouse = GetIndividualViewModel(_individualService.Get(spouseId, fam.TreeId));
             }
 
             var children = _individualService.Get(fam.TreeId,
@@ -76,11 +89,11 @@ namespace FamilyTreeProject.Dnn.Services
             {
                 if (individualViewModel.FatherId > 0)
                 {
-                    individualViewModel.Father = GetIndividualViewModel(_individualService.Get(individualViewModel.FatherId, ind.TreeId), includeAncestors-1, includeFamilies);
+                    individualViewModel.Father = GetIndividualViewModel(_individualService.Get(individualViewModel.FatherId, ind.TreeId), includeAncestors-1);
                 }
                 if (individualViewModel.MotherId > 0)
                 {
-                    individualViewModel.Mother = GetIndividualViewModel(_individualService.Get(individualViewModel.MotherId, ind.TreeId), includeAncestors - 1, includeFamilies);
+                    individualViewModel.Mother = GetIndividualViewModel(_individualService.Get(individualViewModel.MotherId, ind.TreeId), includeAncestors - 1);
                 }
             }
 
@@ -92,8 +105,14 @@ namespace FamilyTreeProject.Dnn.Services
                                 fam => ind.Sex == Sex.Male ? fam.HusbandId == ind.Id : fam.WifeId == ind.Id);
                 foreach (var family in families)
                 {
-                    individualViewModel.Families.Add(GetFamilyViewModel(family));
+                    individualViewModel.Families.Add(GetFamilyViewModel(family, ind.Sex));
                 }
+            }
+
+            individualViewModel.Facts = new List<FactViewModel>();
+            foreach (var fact in ind.Facts)
+            {
+                individualViewModel.Facts.Add(new FactViewModel(fact));
             }
 
             if (ind.ImageId == -1)
@@ -114,11 +133,20 @@ namespace FamilyTreeProject.Dnn.Services
         }
 
         [HttpGet]
-        public HttpResponseMessage GetIndividual(int treeId, int id, int includeAncestors = 0, bool includeFamilies = false)
+        public HttpResponseMessage GetIndividual(int treeId, int id, int includeAncestors = 0, bool includeFamilies = false, bool updateTree = false)
         {
-            return GetEntity(() => _individualService.Get( id, treeId)
+            var response = GetEntity(() => _individualService.Get( id, treeId)
                                     // ReSharper disable once ConvertClosureToMethodGroup
                                     , ind => GetIndividualViewModel(ind, includeAncestors, includeFamilies));
+
+            if (updateTree)
+            {
+                var tree = _treeService.Get(treeId);
+                tree.LastViewedIndividualId = id;
+                _treeService.Update(tree);
+            }
+
+            return response;
         }
 
         [HttpGet]
@@ -132,6 +160,7 @@ namespace FamilyTreeProject.Dnn.Services
             return GetPage(getIndividuals, ind => GetIndividualViewModel(ind));
         }
 
+        [HttpPost]
         public HttpResponseMessage SaveIndividual(IndividualViewModel viewModel)
         {
             Individual individual;
@@ -141,10 +170,22 @@ namespace FamilyTreeProject.Dnn.Services
                 individual = new Individual
                 {
                     Id = -1,
-                    TreeId = -1,
+                    TreeId = viewModel.TreeId,
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName
                 };
+                switch (viewModel.Sex)
+                {
+                    case "Male":
+                        individual.Sex = Sex.Male;
+                        break;
+                    case "Female":
+                        individual.Sex = Sex.Female;
+                        break;
+                    default:
+                        individual.Sex = Sex.Unknown;
+                        break;
+                }
                 _individualService.Add(individual);
             }
             else
@@ -161,7 +202,7 @@ namespace FamilyTreeProject.Dnn.Services
 
             var response = new
             {
-                individual = individual.Id
+                id = individual.Id
             };
 
             return Request.CreateResponse(HttpStatusCode.OK, response);

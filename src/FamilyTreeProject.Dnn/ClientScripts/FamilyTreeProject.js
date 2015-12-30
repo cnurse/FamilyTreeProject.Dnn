@@ -53,6 +53,7 @@ define("familyTreeProject", ["jquery", "knockout", "config"], function ($, ko, c
         ko.components.register("individualDetail", { require: "components/individualDetail/individualDetail" });
         ko.components.register("individualLink", { require: "components/individualLink/individualLink" });
         ko.components.register("individualRow", { require: "components/individualRow/individualRow" });
+        ko.components.register("editIndividual", { require: "components/editIndividual/editIndividual" });
         ko.components.register("editTree", { require: "components/editTree/editTree" });
         ko.components.register("uploadFile", { require: "components/uploadFile/uploadFile" });
         ko.components.register("pager", { require: "components/pager/pager" });

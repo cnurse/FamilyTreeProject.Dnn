@@ -312,4 +312,40 @@
   <data name="AddMother.Text" xml:space="preserve">
     <value>Add Mother</value>
   </data>
+  <data name="Spouse.Text" xml:space="preserve">
+    <value>Spouse</value>
+  </data>
+  <data name="CreateIndividual.Text" xml:space="preserve">
+    <value>Create Individual</value>
+  </data>
+  <data name="CreateIndividualMessage.Text" xml:space="preserve">
+    <value>To create a new Individual, provide a first and last name, and indicate the sex (if known).</value>
+  </data>
+  <data name="Female.Text" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="FirstName.Text" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="LastName.Text" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="Male.Text" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="Sex.Text" xml:space="preserve">
+    <value>Sex</value>
+  </data>
+  <data name="Unknown.Text" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="DeleteIndividualConfirmMessage.Text" xml:space="preserve">
+    <value>Are you sure you want to delete this Individual?</value>
+  </data>
+  <data name="EditIndividualMessage.Text" xml:space="preserve">
+    <value>Update the first and last name, and indicate the sex (if known).</value>
+  </data>
+  <data name="Sources.Text" xml:space="preserve">
+    <value>Sources</value>
+  </data>
 </root>

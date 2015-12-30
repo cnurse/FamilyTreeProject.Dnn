@@ -10,7 +10,6 @@
  * Provides configuration for the Family Tree Project
  *
  * @module config
- * @requires dnn.utility.js
  */
 define("config", [], function () {
 

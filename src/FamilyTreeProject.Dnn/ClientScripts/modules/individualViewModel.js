@@ -12,21 +12,21 @@
  * @module components/individualList/individualList
  * @requires knockout, config, text!./individualList.html
  */
-define("individualViewModel", ["knockout", "config"], function (ko, config) {
+define("individualViewModel", ["knockout", "config", "util"], function (ko, config, util) {
 
     // ReSharper disable once InconsistentNaming
-    var IndividualViewModel = function (params) {
+    var IndividualViewModel = function (props) {
         var self = this;
         var defaultOptions = {
             nameStyle: "lastNameFirstName"
         }
-        var options = $.extend({}, defaultOptions, params.options);
+        var options = $.extend({}, defaultOptions, props.options);
 
-        var individual = params.individual;
-        var refresh = params.refresh;
-        var treeId = params.treeId;
+        var refresh = props.refresh;
 
         self.resx = config.resx;
+
+        self.individual = props.individual;
 
         self.selected = ko.observable(false);
         self.canEdit = ko.observable(false);
@@ -45,11 +45,11 @@ define("individualViewModel", ["knockout", "config"], function (ko, config) {
         };
 
         self.addParent = ko.pureComputed(function() {
-            return (individual().sex() === "Male") ? self.resx.addFather : self.resx.addMother;
+            return (self.individual().sex() === "Male") ? self.resx.addFather : self.resx.addMother;
         });
 
         self.birth = ko.pureComputed(function () {
-            var birth = individual().birth();
+            var birth = self.individual().birth();
             var result = "";
             if (birth !== undefined && birth !== null) {
                 if (birth.factType === "Birth") {
@@ -62,7 +62,7 @@ define("individualViewModel", ["knockout", "config"], function (ko, config) {
         });
 
         self.death = ko.pureComputed(function () {
-            var death = individual().death();
+            var death = self.individual().death();
             var result = "";
             if (death !== undefined && death !== null) {
                 if (death.factType === "Death") {
@@ -84,23 +84,23 @@ define("individualViewModel", ["knockout", "config"], function (ko, config) {
 
         self.imageId = ko.pureComputed({
             read: function () {
-                return individual().imageId();
+                return self.individual().imageId();
             },
             write: function(value) {
-                individual().imageId(value);
+                self.individual().imageId(value);
             }
         });
 
         self.imageUrl = ko.pureComputed(function () {
-            var imageUrl = individual().imageUrl();
+            var imageUrl = self.individual().imageUrl();
             if (imageUrl === "") {
-                imageUrl = (individual().sex() === "Male") ? config.settings.maleIcon : config.settings.femaleIcon;
+                imageUrl = (self.individual().sex() === "Male") ? config.settings.maleIcon : config.settings.femaleIcon;
             }
             return imageUrl;
         });
 
         self.isNull = ko.pureComputed(function() {
-            return individual().individualId() === -1;
+            return self.individual().individualId() === -1;
         });
 
         self.lived = ko.pureComputed(function () {
@@ -110,26 +110,42 @@ define("individualViewModel", ["knockout", "config"], function (ko, config) {
         self.name = ko.pureComputed(function () {
             var result;
             if (options.nameStyle === "lastNameFirstName") {
-                result = individual().lastName() + ", " + individual().firstName();
+                result = self.individual().lastName() + ", " + self.individual().firstName();
             } else {
-                result = individual().firstName() + " " + individual().lastName();
+                result = self.individual().firstName() + " " + self.individual().lastName();
             }
             return result;
         });
 
-        self.editIndividual = function () {
-        }
+        self.sex = ko.pureComputed(function (){
+            return self.individual().sex();
+        });
 
         self.deleteIndividual = function () {
-        }
+            util.confirm(self.resx.deleteIndividualConfirmMessage, self.resx.yes, self.resx.no, function () {
+                var params = {
+                    id: self.individual().individualId(),
+                    treeId: self.individual().treeId(),
+                    lastName: self.individual().lastName(),
+                    firstName: self.individual().firstName()
+                };
+
+                config.individualService().post("DeleteIndividual",
+                    params,
+                    function() {
+                        props.onDeleted();
+                    }
+                );
+            });
+        };
 
         self.onFileUploaded = function () {
             var params = {
-                id: individual().individualId(),
-                treeId: treeId(),
-                lastName: individual().lastName(),
-                firstName: individual().firstName(),
-                imageId: individual().imageId()
+                id: self.individual().individualId(),
+                treeId: self.individual().treeId(),
+                lastName: self.individual().lastName(),
+                firstName: self.individual().firstName(),
+                imageId: self.individual().imageId()
             };
 
             config.individualService().post("SaveIndividual",
@@ -141,7 +157,7 @@ define("individualViewModel", ["knockout", "config"], function (ko, config) {
         }
 
         self.selectIndividual = function () {
-            params.onSelected(individual());
+            props.onSelected(self.individual());
         }
 
         self.toggleSelected = function () {

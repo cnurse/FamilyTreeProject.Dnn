@@ -1,11 +1,24 @@
 <div class="ftpPanel" id="familyGroupView-panel">
     <div class="ftpSubPanelLeft">
+        <div>
+            <a class="ftpIcon" data-bind="attr: {title: resx.editIndividual}, click: editIndividual"><i class="fa fa-pencil"></i></a>
+        </div>
         <!-- ko component: {
             name: "individualDetail",
             params: {
                 individual: individual,
-                treeId: treeId,
                 refresh: getIndividual
+            }
+        } -->
+        <!-- /ko -->
+        <!-- ko component: {
+            name: "editIndividual",
+            params: {
+                individual: individual,
+                isVisible: showEdit,
+                dialogTitle: resx.editIndividual,
+                message: resx.editIndividualMessage,
+                onSuccess: getIndividual
             }
         } -->
         <!-- /ko -->
@@ -33,16 +46,29 @@
             }
         } -->
         <!-- /ko -->
-        <div class="ftpSubHeading">
-            <span data-bind="text:resx.spouseChildren"></span>
+        <div data-bind="foreach: families">
+            <div class="ftpSubHeading">
+                <span data-bind="text : $parent.resx.spouse, visible : children().length == 0"></span>
+                <span data-bind="text : $parent.resx.spouseChildren, visible : children().length > 0"></span>
+            </div>
+            <!-- ko component: {
+                name: "individualCard",
+                params: {
+                    individual: spouse,
+                    onSelected: $parent.viewIndividual
+                }
+            } -->
+            <!-- /ko -->
+            <div class="ftpChildren" data-bind="foreach: children">
+                <!-- ko component: {
+                    name: "individualCard",
+                    params: {
+                        individual: $rawData,
+                        onSelected: $parents[1].viewIndividual
+                    }
+                } -->
+                <!-- /ko -->
+            </div>
         </div>
-        <!-- ko component: {
-            name: "individualCard",
-            params: {
-                individual: spouse,
-                onSelected: viewIndividual
-            }
-        } -->
-        <!-- /ko -->
     </div>
 </div>

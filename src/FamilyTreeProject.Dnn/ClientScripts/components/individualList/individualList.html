@@ -2,7 +2,11 @@
     <div id="individuals-listView" class="ftpSubPanel">
         <div class="ftpSearchPanel">
             <input type="text" class="ftpSearchBox" data-bind="value: searchText, valueUpdate: 'afterkeydown', attr: { 'placeholder': resx.findIndividual}" />
-            <a class="ftpButton right" data-bind="click: addIndividual, text: resx.addIndividual"></a>
+            <a class="ftpButton right" data-bind="click: addIndividual">
+                <i class="fa fa-plus"></i>
+                <span data-bind="text: resx.addIndividual"></span>
+            </a>
+
         </div>
     </div>
     <table class="ftpTable">
@@ -11,33 +15,49 @@
                 <th data-bind="text: resx.name"></th>
                 <th data-bind="text: resx.birth"></th>
                 <th data-bind="text: resx.death"></th>
-                <th width="100px" data-bind="text: resx.actions"></th>
+                <th width="60px" data-bind="text: resx.actions"></th>
             </tr>
         </thead>
         <tbody data-bind="foreach: { data: individuals, as: 'individual'}">
             <!-- ko component: {
-                    name: "individualRow",
-                    params: {
-                        individual: ko.observable(individual),
-                        onSelected: $parent.viewIndividual,
-                    }
-                } -->
+                name: "individualRow",
+                params: {
+                    individual: ko.observable(individual),
+                    onSelected: $parent.viewIndividual,
+                    onDeleted: $parent.refresh,
+                }
+            } -->
             <!-- /ko -->
+
+
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="4">
                     <!-- ko component: {
-                            name: "pager",
-                            params: { pageSize : pageSize,
-                                pageIndex: pageIndex,
-                                totalResults : totalResults,
-                                refresh : refresh 
-                            }
-                        } -->
+                        name: "pager",
+                        params: { pageSize : pageSize,
+                            pageIndex: pageIndex,
+                            totalResults : totalResults,
+                            refresh : refresh 
+                        }
+                    } -->
                     <!-- /ko -->
                 </td>
             </tr>
         </tfoot>
     </table>
 </div>
+<!-- ko component: {
+    name: "editIndividual",
+    params: {
+        individualId: ko.observable(-1),
+        newIndividualId: selectedIndividualId ,
+        treeId: treeId,
+        isVisible: showCreate,
+        dialogTitle: resx.createIndividual,
+        message: resx.createIndividualMessage,
+        onSuccess: onIndividualCreated
+    }
+} -->
+<!-- /ko -->

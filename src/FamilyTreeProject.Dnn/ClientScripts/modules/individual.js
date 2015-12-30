@@ -28,6 +28,7 @@ define("individual", ["knockout"], function (ko) {
             self.imageId = ko.observable(-1);
             self.imageUrl = ko.observable("");
             self.sex = ko.observable(sex);
+            self.treeId = ko.observable(-1);
         } else {
             self.individualId = ko.observable(data.id);
             self.lastName = ko.observable(data.lastName);
@@ -38,6 +39,7 @@ define("individual", ["knockout"], function (ko) {
             self.imageId = ko.observable(data.imageId);
             self.imageUrl = ko.observable(data.imageUrl);
             self.sex = ko.observable(data.sex);
+            self.treeId = ko.observable(data.treeId);
         }
     }
 

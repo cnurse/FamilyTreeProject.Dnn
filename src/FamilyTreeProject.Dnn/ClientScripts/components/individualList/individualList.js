@@ -7,7 +7,7 @@
  */
 
 /**
- * Provides a Ancestors View component for the Family Tree Project
+ * Provides a Individual List View component for the Family Tree Project
  *
  * @module components/individualList/individualList
  * @requires knockout, config, text!./individualList.html
@@ -22,8 +22,7 @@ define("components/individualList/individualList",
      * @constructor 
      * @param params - the parameters passed in from the component markup
      */
-    // ReSharper disable once InconsistentNaming
-    var IndividualListViewModel = function(params) {
+    var individualListViewModel = function(params) {
         var self = this;
         var settings = config.settings;
 
@@ -34,6 +33,8 @@ define("components/individualList/individualList",
         self.selectedIndividualId = params.selectedIndividualId;
 
         self.individuals = ko.observableArray([]);
+
+        self.showCreate = ko.observable(false);
 
         self.searchText = ko.observable("");
         self.totalResults = ko.observable(0);
@@ -54,7 +55,7 @@ define("components/individualList/individualList",
         });
 
         self.addIndividual = function() {
-
+            self.showCreate(true);
         };
 
         self.getIndividuals = function () {
@@ -71,8 +72,7 @@ define("components/individualList/individualList",
                         self.individuals.removeAll();
                         var results = data.results;
                         for (var i = 0; i < results.length; i++) {
-                            var result = results[i];
-                            self.individuals.push(individualFactory(result));
+                            self.individuals.push(individualFactory(results[i]));
                         }
 
                         self.totalResults(data.total);
@@ -80,6 +80,10 @@ define("components/individualList/individualList",
                 }
             );
         };
+
+        self.onIndividualCreated = function () {
+            self.activePanel(config.settings.familyGroupPanel);
+        }
 
         self.refresh = function () {
             self.getIndividuals();
@@ -99,5 +103,5 @@ define("components/individualList/individualList",
     }
 
     // Return component definition
-    return { viewModel: IndividualListViewModel, template: htmlString };
+    return { viewModel: individualListViewModel, template: htmlString };
 });

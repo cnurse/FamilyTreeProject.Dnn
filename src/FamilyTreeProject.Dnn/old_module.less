@@ -1,0 +1,591 @@
+@border_color: #aaa;
+
+@header_background_color: #fff;
+
+@tab_background_color: #eee;
+@selectedTab_color: #0087c6;
+@selectedTab_background_color: #fff;
+@card_background_color: #fff;
+
+@panel_background_color: #fff;
+
+@grid_alt_background_color: #eee;
+@grid_hover_background_color: #d9ecfa;
+
+@primaryBtn_background_color: #0087c6;
+@primaryBtn_color: #fff;
+@secondaryBtn_background_color: #e4e4e4;
+@secondaryBtn_color: #333;
+@otherBtn_background_color: #fff;
+@otherBtn_color: #333;
+
+@treeViewPanelRight_background_color: #eee;
+@treeViewPanelRight_border_color: #aaa;
+
+@boxShadow_color: #aaa;
+
+@heading_fontSize: 28px;
+@subheading_fontSize: 18px;
+@closeButton_fontSize: 28px;
+@tabs_fontSize: 16px;
+
+@width: 100%;
+@panel_OuterMargin: 20px;
+@panel_InnerMargin: 15px;
+@border_radius: 4px;
+@tab_width: 150px;
+@headingLeft_width: 30%;
+@headingRight_width: 20%;
+@headingCenter_width: 40%;
+@panelLeft_width: 60%;
+@panelRight_width: 27%;
+@card_InnerMargin: 5px;
+@card_OuterMargin: 5px;
+@childCard_OuterMargin: 15px;
+
+@header_height:40px;
+@panel_minHeight: 600px;
+@card_minHeight:40px;
+@childCard_minHeight: 30px;
+
+@mainImage_width: 175px;
+@cardImage_width: 40px;
+@childCardImage_width: 30px;
+
+.ftpContainer {
+    border: solid 1px @border_color;
+    width: @width;
+}
+
+.ftpContainer a {
+    cursor: pointer;
+}
+
+.ftpContainer select {
+    padding: 6px;
+    margin-bottom: 0px;
+}
+
+.ftpContainer #ftpGettingStarted {
+    margin: @panel_OuterMargin;
+}
+
+.ftpContainer #ftpGettingStarted .dnnFormMessage {
+    max-width:none;
+}
+
+.ftpContainer .ftpLeft {
+    float: left;
+}
+
+.ftpContainer .ftpRight {
+    float: right;
+}
+
+//Header
+.ftpContainer .ftpHeader {
+    height: @header_height;
+    padding-top: 15px;
+    padding-bottom: 10px;
+    border-bottom: solid 1px @border_color;
+    background-color: @header_background_color;
+    box-shadow: 0px 2px 2px @boxShadow_color;
+}
+
+.ftpContainer .ftpHeader > div {
+    font-size: @heading_fontSize;
+    margin-left: @panel_OuterMargin;
+    float: left;
+    width: @headingCenter_width;
+}
+
+.ftpContainer .ftpHeader > div:first-child {
+    margin-top:10px;
+    width: @headingLeft_width;
+}
+
+.ftpContainer .ftpHeader > div:last-child {
+    margin-top:5px;
+    float: right;
+    width: @headingRight_width;
+}
+
+.ftpContainer .ftpHeader > div > div {
+    padding: 6px;
+    font-size: 16px;
+    float:left;
+    min-width: 50px;
+}
+
+.ftpContainer .ftpHeader > div > div.ftpButtons {
+    padding-top: 3px;
+}
+
+.ftpContainer .ftpHeader .ftpLabel {
+    margin-top: 5px;
+}
+
+.ftpContainer .ftpHeader > div > div > span {
+    padding-top: 5px;
+    display: inline-block;
+}
+
+.ftpContainer .ftpHeader select {
+    margin-top: -2px;
+}
+
+.ftpContainer .ftpHeader a.ftpIcon {
+    float: right;
+    font-size: @closeButton_fontSize;
+    margin-right: @panel_OuterMargin;
+    padding: 0px;
+}
+
+//Body
+.ftpContainer .ftpBody {
+    margin: @panel_OuterMargin;
+    background-color: @panel_background_color;
+    border: solid 1px @border_color;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+//Menu
+.ftpContainer .ftpMenu {
+    position: relative;
+    overflow: hidden;
+}
+
+.ftpContainer .ftpMenu ul {
+    display: inline-block;
+    margin-left: 0px;
+    margin-bottom: 0px;
+    width: 100%;
+    border-top-left-radius: @border_radius;
+    border-top-right-radius: @border_radius;
+    background-color: @tab_background_color;
+    padding-left: 1px;
+}
+
+.ftpContainer .ftpMenu ul > li {
+    float: left;
+    list-style: none;
+    border-top-left-radius: @border_radius;
+    border-top-right-radius: @border_radius;
+}
+
+.ftpContainer .ftpMenu ul > li > div {
+    width: @tab_width;
+    padding: 12px @panel_InnerMargin 10px @panel_InnerMargin;
+    cursor: pointer;
+    font-size: @tabs_fontSize;
+}
+
+.ftpContainer .ftpMenu ul > li.selected {
+    background-color: @selectedTab_background_color;
+}
+
+.ftpContainer .ftpMenu ul > li.selected {
+    background-color: @selectedTab_background_color;
+    color: @selectedTab_color;
+}
+
+
+//Panels
+.ftpContainer .ftpPanel .ftpSubPanelLeft {
+    float: left;
+    margin: @panel_OuterMargin;
+    padding: @panel_InnerMargin;
+    border: 1px solid @treeViewPanelRight_border_color;
+    width: @panelLeft_width;
+    min-height: @panel_minHeight;
+}
+
+.ftpContainer .ftpPanel .ftpSubPanelRight {
+    float: right;
+    margin: @panel_OuterMargin;
+    padding: @panel_InnerMargin;
+    border: 1px solid @treeViewPanelRight_border_color;
+    width: @panelRight_width;
+    min-height: @panel_minHeight;
+    border-radius: @border_radius;
+    background-color: @treeViewPanelRight_background_color;
+}
+
+.ftpContainer .ftpPanel .ftpHeading {
+    font-size: @heading_fontSize;
+}
+
+.ftpContainer .ftpPanel .ftpSubHeading {
+    margin-bottom: 10px;
+    font-size: @subheading_fontSize;
+    margin-top: 20px;
+}
+
+.ftpContainer .ftpPanel .ftpSummary {
+    height: 25px;
+}
+
+.ftpContainer .ftpSubPanelLeft .ftpImage {
+    width: @mainImage_width;
+    float: left;
+    padding-bottom: @panel_InnerMargin;
+    padding-right: @panel_InnerMargin;
+    position: relative; 
+    left: 0px; 
+    top: 0px;
+}
+
+.ftpContainer .ftpSubPanelLeft .ftpImage > img{
+    position: relative; 
+    cursor: pointer;
+    left: 0px; 
+    top: 0px;
+}
+
+.ftpContainer .ftpSubPanelLeft .ftpImage > div{
+    position: absolute; 
+    left: 50px; 
+    top: 50px;
+    font-size:36px;
+    color: #aaa;
+}
+
+.ftpContainer .ftpSubPanelLeft .ftpTitle {
+    font-size: @heading_fontSize;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+.ftpContainer .ftpSubPanelLeft .ftpIcon {
+    font-size: @heading_fontSize;
+    float: right;
+    cursor:pointer;
+}
+
+//TreeView Panel
+
+//Group View Panel
+.ftpContainer .ftpPanel .ftpFactsList {
+    clear:both;
+    float: left;
+    width: @panelLeft_width;
+}
+
+.ftpContainer .ftpPanel .ftpSourcesList {
+    float: right;
+    width: @panelRight_width;
+}
+
+//Individual Card View
+.ftpContainer .ftpCard {
+    padding: @card_InnerMargin;
+    margin: @card_OuterMargin;
+    background-color: @card_background_color;
+    border: 1px solid @border_color;
+    min-height: @card_minHeight;
+    border-radius: @border_radius;
+    cursor:pointer;
+}
+
+.ftpContainer .ftpChildren .ftpCard {
+    margin-left: @childCard_OuterMargin;
+    min-height: @childCard_minHeight;
+}
+
+.ftpContainer .ftpCard.ftpAdd {
+    background-color: transparent;
+    border: 2px dashed @border_color;
+}
+
+.ftpContainer .ftpCard .ftpImage {
+    width: @cardImage_width;
+    float: left;
+    padding-right: @card_InnerMargin;
+    position: relative; 
+    left: 0px; 
+    top: 0px;
+}
+
+.ftpContainer .ftpChildren .ftpCard .ftpImage {
+    width: @childCardImage_width;
+}
+
+.ftpContainer .ftpCard .ftpImage > img{
+    position: relative; 
+    left: 0px; 
+    top: 0px;
+    max-width: 30px;
+    max-height: 40px;
+}
+
+.ftpContainer .ftpChildren .ftpCard .ftpImage > img{
+    max-height: 30px;
+}
+
+.ftpContainer .ftpCard .ftpImage > div{
+    position: absolute; 
+    left: 50px; 
+    top: 50px;
+    font-size:36px;
+    color: #aaa;
+}
+
+.ftpContainer .ftpCard .ftpTitle {
+    font-size: @tabs_fontSize;
+}
+
+.ftpContainer .ftpCard.ftpAdd .ftpTitle {
+    padding-top: 10px;
+}
+
+.ftpContainer .ftpCard .ftpIcon {
+    font-size: @tabs_fontSize;
+    float: right;
+    cursor:pointer;
+}
+
+
+//Search Panel
+.ftpContainer .ftpSearchPanel {
+    padding: @panel_InnerMargin;
+    border-bottom: 1px solid @border_color;
+}
+
+.ftpContainer .ftpSearchPanel > .ftpSearchBox {
+    padding: 8px;
+    border: 1px solid @border_color;
+    width: 250px;
+    border-radius: 3px;
+    margin-bottom: 0;
+    display: inline-block;
+    background-image: url(images/search.png);
+    background-repeat: no-repeat;
+    background-position: 240px 8px;
+}
+
+//Tables
+.ftpContainer .ftpTable {
+    width: 100%;
+    border-collapse: collapse;
+    border-bottom: 1px solid @border_color;
+}
+
+.ftpContainer .ftpTable tr:nth-child(2n) {
+    background: @grid_alt_background_color;
+}
+
+.ftpContainer .ftpTable > tbody > tr {
+    transition: background 100ms linear;
+}
+
+.ftpContainer .ftpTable > tbody > tr:hover {
+    background: @grid_hover_background_color;
+}
+
+.ftpContainer .ftpTable th {
+    border-left: 1px solid @border_color;
+    border-bottom: 1px solid @border_color;
+    text-align: center;
+}
+
+.ftpContainer .ftpTable th, .ftpContainer .ftpTable td {
+    padding: 8px 5px 7px 5px;
+    height: 20px;
+}
+
+.ftpContainer .ftpTable th:first-child, .ftpContainer .ftpTable td:first-child {
+    padding: 8px 5px 7px @panel_InnerMargin;
+    border-left: none;
+    text-align: left;
+}
+
+.ftpContainer .ftpTable .fa {
+    font-size: 18px;
+}
+
+.ftpContainer .ftpTable tfoot {
+    border-top: 1px solid @border_color;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 5px;
+}
+
+.ftpContainer .ftpTable td a {
+    color: #0087c6;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.ftpContainer .ftpTable .ftpPager {
+    width: 100%;
+}
+
+.ftpContainer .ftpTable .ftpPager td {
+    padding: 0px;
+    height: 40px;
+    width: 33%;
+}
+
+.ftpContainer .ftpTable .ftpPager td select {
+    margin-bottom: 1px;
+}
+
+.ftpContainer .ftpTable .ftpPager td div {
+    margin-bottom: 0px;
+}
+
+.ftpContainer .ftpTable .ftpPager td div.right {
+    margin-top: 9px;
+}
+
+.ftpContainer .ftpTable .ftpPager td ul {
+    display: block;
+    list-style-type: none;
+    margin: 4px 10px 0 8px;
+    padding: 0;
+}
+
+.ftpContainer .ftpTable .ftpPager td ul > li {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.ftpContainer .ftpTable .ftpPager td a.prev, .ftpContainer .ftpPager td a.next {
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 1px solid @border_color;
+    width: 25px;
+    height: 25px;
+    display: block;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: @panel_background_color;
+}
+
+.ftpContainer .ftpTable .ftpPager td a.prev {
+    background-image: url('images/left.png');
+}
+
+.ftpContainer .ftpTable .ftpPager td a.next {
+    background-image: url('images/right.png');
+}
+
+.ftpContainer .ftpTable .ftpPager td a.prev.disabled, .ftpContainer .ftpTable td a.next.disabled {
+    opacity: 0.50;
+    cursor: default;
+}
+
+//Buttons
+.ftpContainer .ftpButton {
+    background: @otherBtn_background_color;
+    color: @otherBtn_color;
+    display: inline-block;
+    padding: 8px;
+    cursor: pointer;
+    min-width: 75px;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 13px;
+    border: 1px solid @border_color;
+    text-align: center;
+    line-height: normal;
+}
+
+.ftpContainer a.primarybtn {
+    background: @primaryBtn_background_color;
+    color: @primaryBtn_color !important;
+    display: inline-block;
+    padding: 9px 9px;
+    cursor: pointer;
+    min-width: 75px;
+    border-radius: 3px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 13px;
+}
+
+.ftpContainer a.secondarybtn {
+    background: @secondaryBtn_background_color;
+    color: @secondaryBtn_color !important;
+    display: inline-block;
+    padding: 9px 9px;
+    cursor: pointer;
+    min-width: 75px;
+    border-radius: 3px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 13px;
+}
+
+//Loading Bar
+.ftpContainer #loadingbar {
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 4px;
+    display: none;
+}
+
+.ftpContainer #loadingbar > div {
+    background-color: #0087c6;
+    top: 0;
+    left: 100px;
+    height: 4px;
+}
+
+// Quick Settings
+.qsContainer .dnnForm .dnnFormMessage {
+    width: 400px;
+    white-space: normal;
+}
+
+//Dialogs
+.ftpDialog .ui-dialog-buttonset {
+    text-align: center;
+}
+.ftpDialog .dnnPrimaryAction, .ftpDialog .dnnSecondaryAction {
+    box-shadow: none;   
+}
+
+.ftpDialog label {
+    display: block;
+}
+
+.ftpDialog input {
+    width: 220px;
+    margin-bottom: 10px;
+}
+
+.ftpDialog input[type="radio"] {
+    width: 40px;
+    margin-bottom: 5px;
+}
+
+.ftpDialog textarea {
+    width: 95%;
+    height: 45px;
+    margin-bottom: 10px;
+}
+
+.ftpContainer .dnnFormPopup {
+  left: 250px;
+  top: 250px;
+  width: 300px;
+}
+.ftpContainer .dnnDialogHeader {
+  border-bottom: 1px solid #ddd;
+  font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 18px;
+}
+.ftpContainer #mask {
+  position: absolute;
+  background: transparent;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  display: none;
+}

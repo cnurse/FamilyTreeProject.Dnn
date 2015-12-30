@@ -5,7 +5,7 @@
                                             class: 'dnnSecondaryAction'
                                         }, {
                                             text: resx.save,
-                                            click: saveTree,
+                                            click: saveIndividual,
                                             class: 'dnnPrimaryAction'
                                         }],
                                         close: close,
@@ -18,17 +18,21 @@
                                         widget, widget,
                                         width: 600,
                                     }">
-    <div class="dnnFormMessage dnnFormInfo" data-bind="text: resx.createTreeMessage"></div>
+    <div class="dnnFormMessage dnnFormInfo" data-bind="text: message"></div>
     <div>
-        <label data-bind="text: resx.name"></label>
-        <input type="text" data-bind="value: name" />
+        <label data-bind="text: resx.firstName"></label>
+        <input type="text" data-bind="value: firstName" />
     </div>
     <div>
-        <label data-bind="text: resx.title"></label>
-        <input type="text" data-bind="value: title" />
+        <label data-bind="text: resx.lastName"></label>
+        <input type="text" data-bind="value: lastName" />
     </div>
     <div>
-        <label data-bind="text: resx.description"></label>
-        <textarea data-bind="value: description"></textarea>
+        <label data-bind="text: resx.sex"></label>
+        <div>
+            <input type="radio" value="Male" data-bind="checked: sex"/><span data-bind="text: resx.male"></span>
+            <input type="radio" value="Female" data-bind="checked: sex" /><span data-bind="text: resx.female"></span>
+            <input type="radio" value="Unknown" data-bind="checked: sex" /><span data-bind="text: resx.unknown"></span>
+        </div>
     </div>
 </div>
