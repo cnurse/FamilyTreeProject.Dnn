@@ -22,6 +22,9 @@ define("components/viewSelector/viewSelector", ["knockout", "config", "text!./vi
         self.panels = params.panels;
         self.selectedIndividualId = params.selectedIndividualId;
 
+        self.selectedCSSClass = ko.observable("");
+        self.selectedText = ko.observable("");
+
         var menuClick = function (panel) {
             if (self.activePanel() === panel) {
                 return;
@@ -29,10 +32,29 @@ define("components/viewSelector/viewSelector", ["knockout", "config", "text!./vi
             self.activePanel(panel);
         };
 
+        var updateSelectedItem = function() {
+            switch (self.activePanel()) {
+                case "individuals":
+                    self.selectedText(self.resx.individualList);
+                    self.selectedCSSClass("fa-list");
+                    break;
+                case "familyGroup":
+                    self.selectedText(self.resx.familyGroupView);
+                    self.selectedCSSClass("fa-users");
+                    break;
+                default:
+                    self.selectedText(self.resx.treeOverView);
+                    self.selectedCSSClass("fa-sitemap");
+                    break;
+            }
+        }
+
         self.activePanel.subscribe(function(newValue) {
             var listItem = $("#" + newValue + "-menu");
-            listItem.parent().children().removeClass("selected");
-            listItem.addClass("selected");
+            listItem.parent().children().removeClass("active");
+            listItem.addClass("active");
+
+            updateSelectedItem();
         });
 
         self.selectFamilyGroupView = function (data, e) {
@@ -46,6 +68,8 @@ define("components/viewSelector/viewSelector", ["knockout", "config", "text!./vi
         self.selectTreeOverview = function (data, e) {
             menuClick(self.panels.tree);
         };
+
+        updateSelectedItem();
     }
 
     // Return component definition

@@ -1,18 +1,22 @@
-<table class="ftpPager">
+<table class="ftp-pager">
     <tr>
         <td>
             <span data-bind="text: resx.individualsPageSize"></span>
-            <select data-bind="value: pageSize, valueAllowUnset: false, options: pageSizeOptions, optionsText: 'text', optionsValue: 'value'"></select>
+            <select class="form-control" data-bind="value: pageSize, valueAllowUnset: false, options: pageSizeOptions, optionsText: 'text', optionsValue: 'value'"></select>
         </td>
         <td>
             <div data-bind="html: pagerItemsDescription"></div>
         </td>
         <td>
-            <ul class="right pager" data-bind="visible: pagerVisible">
-                <li><a data-bind="click: prev, attr: { 'class': pagerPrevClass }"></a></li>
-                <li><a data-bind="click: next, attr: { 'class': pagerNextClass }"></a></li>
-            </ul>
-            <div class="right" data-bind="html: pagerDescription"></div>
+            <div class="right" data-bind="visible: pagerVisible">
+                <button type="button" class="btn btn-default" data-bind="click: prev()">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <button type="button" class="btn btn-default" data-bind="click: next()">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+                <span data-bind="text: pagerDescription"></span>
+            </div>
         </td>
     </tr>
 </table>

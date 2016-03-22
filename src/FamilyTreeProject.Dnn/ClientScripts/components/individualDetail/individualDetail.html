@@ -1,18 +1,22 @@
-﻿<div class="ftpDetail">
-    <div>
-        <div class="ftpImage">
-            <img data-bind="attr: {src: imageUrl}, click: uploadFile, event: { mouseover: enableButton, mouseout: disableButton}"/>
-            <div data-bind="visible: showUploadButton"><i class="fa fa-camera"></i>
-            </div>
-        </div>
-        <div class="ftpTitle" data-bind="text: name"></div>
+﻿<section class="row">
+    <section class="col-xs-8 col-sm-6">
+        <a href="#" class="thumbnail" data-bind="click: uploadFile">
+            <img data-bind="attr: {src: imageUrl}" />
+        </a>
+    </section>
+    <section class="col-xs-8 col-sm-6">
+        <h3 data-bind="text: name"></h3>
         <div>
-            <div class="ftpNormal" data-bind="text: sex"></div>
-            <div class="ftpNormal" data-bind="text: birth"></div>
-            <div class="ftpNormal" data-bind="text: death"></div>
+            <p data-bind="text: sex"></p>
+            <p data-bind="text: birth"></p>
+            <p data-bind="text: death"></p>
         </div>
-    </div>
-</div>
+        <button type="button" class="btn btn-default" data-bind="click: editIndividual">
+            <i class="fa fa-pencil"></i>
+            <span data-bind="text: resx.editIndividual"></span>
+        </button>
+    </section>
+</section>
 <div class="ftpFactsList">
     <div class="ftpSubHeading">
         <span data-bind="text:resx.facts"></span>
@@ -24,6 +28,19 @@
         <span data-bind="text:resx.sources"></span>
     </div>
 </div>
+
+<!-- ko component: {
+        name: "editIndividual",
+        params: {
+            individual: individual,
+            isVisible: showEdit,
+            dialogTitle: resx.editIndividual,
+            message: resx.editIndividualMessage,
+            onSuccess: onEdited
+        }
+    } -->
+<!-- /ko -->
+
 
 <!-- ko component: {
     name: "uploadFile",

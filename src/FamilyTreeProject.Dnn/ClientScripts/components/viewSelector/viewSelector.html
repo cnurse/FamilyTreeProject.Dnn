@@ -1,13 +1,30 @@
-<div class="ftpMenu">
-    <ul>
-        <li id="tree-menu" class="selected" data-bind="click: selectTreeOverview">
-            <div data-bind="text: resx.treeOverView"></div>
+<div class="btn-group navbar-btn">
+    <button type="button" class="btn btn-default">
+        <i class="fa" data-bind="css:selectedCSSClass"></i>
+        <span data-bind="text: selectedText"></span>
+    </button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu">
+        <li id="tree-menu" class="active">
+            <a href="#" data-bind="click: selectTreeOverview">
+                <i class="fa fa-sitemap"></i>&nbsp;&nbsp;
+                <span data-bind="text: resx.treeOverView"></span>
+            </a>
         </li>
-        <li id="individuals-menu" data-bind="click: selectIndividualList">
-            <div data-bind="text: resx.individualList"></div>
+        <li id="individuals-menu">
+            <a href="#" data-bind="click: selectIndividualList">
+                <i class="fa fa-list"></i>&nbsp;&nbsp;
+                <span data-bind="text: resx.individualList"></span>
+            </a>
         </li>
-        <li id="familyGroup-menu" data-bind="click: selectFamilyGroupView, visible: selectedIndividualId() > 0">
-            <div data-bind="text: resx.familyGroupView"></div>
+        <li id="familyGroup-menu" data-bind="visible: selectedIndividualId() > 0">
+            <a href="#" data-bind="click: selectFamilyGroupView">
+                <i class="fa fa-users"></i>&nbsp;&nbsp;
+                <span data-bind="text: resx.familyGroupView"></span>
+            </a>
         </li>
     </ul>
 </div>

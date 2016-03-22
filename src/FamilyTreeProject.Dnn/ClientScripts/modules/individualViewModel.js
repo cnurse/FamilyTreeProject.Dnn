@@ -31,7 +31,7 @@ define("individualViewModel", ["knockout", "config", "util"], function (ko, conf
         self.selected = ko.observable(false);
         self.canEdit = ko.observable(false);
         self.showUpload = ko.observable(false);
-        self.showUploadButton = ko.observable(false);
+        self.showEdit = ko.observable(false);
 
         var right = function(str, n) {
             if (n <= 0)
@@ -137,6 +137,14 @@ define("individualViewModel", ["knockout", "config", "util"], function (ko, conf
                     }
                 );
             });
+        };
+
+        self.editIndividual = function () {
+            self.showEdit(true);
+        }
+
+        self.onEdited = function () {
+            refresh();
         };
 
         self.onFileUploaded = function () {

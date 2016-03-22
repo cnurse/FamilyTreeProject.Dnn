@@ -74,6 +74,11 @@ define("components/treeSelector/treeSelector", ["knockout", "config", "text!./tr
             self.showCreate(true);
         }
 
+        self.changeTree = function(data) {
+            self.treeId(data.treeId);
+            self.treeName(data.name);
+        }
+
         self.init = function() {
             getTrees();
         }

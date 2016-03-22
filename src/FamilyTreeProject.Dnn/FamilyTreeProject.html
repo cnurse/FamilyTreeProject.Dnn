@@ -16,67 +16,72 @@
 [Css:{ path: "//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"}]
 [Css:{ path: "~/Resources/Shared/components/FileUpload/dnn.FileUpload.css"}]
 
-
-<div id="FTP-[ModuleContext:ModuleId]" class="ftpContainer">
-    <div class="ftpHeader">
-        <div>[Resx:{key:"Heading"}]</div>
-        <!-- ko component: {
-                name: "treeSelector",
-                params: { treeId : treeId }
-            } -->
-        <!-- /ko -->
-        <div>
-            <a class="ftpIcon"><i class="fa fa-home"></i></a>
+<div id="FTP-[ModuleContext:ModuleId]" class="container">
+    <nav class="navbar navbar-default">
+        <div class="navbar-header">
+            <a class="navbar-brand">[Resx:{key:"Heading"}]</a>
         </div>
-    </div>
+        <!-- ko component: {
+            name: "treeSelector",
+            params: { treeId : treeId }
+        } -->
+        <!-- /ko -->
+        <!-- ko if:treeId() > 0 -->
+            <!-- ko component: {
+                name: "viewSelector",
+                params: {
+                    panels : panels,
+                    activePanel : activePanel,
+                    selectedIndividualId: selectedIndividualId
+                }
+            } -->
+            <!-- /ko -->
+        <!-- /ko -->
+        <div class="nav navbar-nav navbar-right">
+            <a class="btn btn-default navbar-btn">
+                <i class="fa fa-home"></i>
+            </a>
+        </div>
+    </nav>
     <div id="ftpGettingStarted" data-bind="visible: treeId() == -1" style="display:none">
         <div>
             <div class="dnnFormInfo dnnFormMessage">[Resx:{key:"GettingStartedMessage"}]</div>
         </div>
     </div>
-    <div class="ftpBody" data-bind="visible: treeId() > 0" style="display:none">
-        <!-- ko component: {
-            name: "viewSelector",
-            params: {
-                panels : panels,
-                activePanel : activePanel, 
-                selectedIndividualId: selectedIndividualId 
-            }
-        } -->
-        <!-- /ko -->
+    <div data-bind="visible: treeId() > 0" style="display:none">
 
         <div id="ftp-panels">
             <!-- ko if: activePanel() == "tree" -->
-                <!-- ko component: {
-                    name: "treeView",
-                    params: {
-                        treeId: treeId,
-                        activePanel : activePanel,
-                        selectedIndividualId: selectedIndividualId 
-                    }
-                } -->
-                <!-- /ko -->
+            <!-- ko component: {
+                name: "treeView",
+                params: {
+                    treeId: treeId,
+                    activePanel : activePanel,
+                    selectedIndividualId: selectedIndividualId
+                }
+            } -->
+            <!-- /ko -->
             <!-- /ko -->
             <!-- ko if: activePanel() == "individuals" -->
-                <!-- ko component: {
-                    name: "individualList",
-                    params: {
-                        treeId: treeId,
-                        activePanel : activePanel,
-                        selectedIndividualId: selectedIndividualId 
-                    }
-                } -->
-                <!-- /ko -->
+            <!-- ko component: {
+                name: "individualList",
+                params: {
+                    treeId: treeId,
+                    activePanel : activePanel,
+                    selectedIndividualId: selectedIndividualId
+                }
+            } -->
+            <!-- /ko -->
             <!-- /ko -->
             <!-- ko if: activePanel() == "familyGroup" -->
-                <!-- ko component: {
-                    name: "familyGroupView",
-                    params: {
-                        treeId: treeId,
-                        selectedIndividualId: selectedIndividualId 
-                    }
-                } -->
-                <!-- /ko -->
+            <!-- ko component: {
+                name: "familyGroupView",
+                params: {
+                    treeId: treeId,
+                    selectedIndividualId: selectedIndividualId
+                }
+            } -->
+            <!-- /ko -->
             <!-- /ko -->
         </div>
 
@@ -130,8 +135,8 @@
             familyGroupView: '[Resx:{key:"FamilyGroupView"}]',
             female: '[Resx:{key:"Female"}]',
             fileUpload: {
-                title:'[Resx:{key:"UploadFile"}]',
-                uploadToFolderLabel:'[Resx:{key:"UploadTo"}]',
+                title: '[Resx:{key:"UploadFile"}]',
+                uploadToFolderLabel: '[Resx:{key:"UploadTo"}]',
                 dragAndDropAreaTitle: '[Resx:{key:"DragAndDropAreaTitle"}]',
                 uploadFileMethod: '[Resx:{key:"UploadFileMethod"}]',
                 uploadFromWebMethod: '[Resx:{key:"UploadFromWebMethod"}]',

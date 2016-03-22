@@ -1,3 +1,96 @@
-﻿.ModFtpFamilyTreeProjectC {
-    @import "Content/bootstrap/bootstrap.less";
+﻿/*Bootstrap Overrides*/
+@navbar_backgroundColor: rgb(248, 248, 248);
+
+.ModFtpFamilyTreeProjectC {
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    h3 {
+        font-size: 1.0rem;
+    }
+
+    p {
+        font-size: 0.85rem;
+    }
+
+    .ftp-left {
+        float: left;
+    }
+
+    .ftp-right {
+        float: right;
+    }
+
+    .navbar-default {
+        background-color : @navbar_backgroundColor;
+        margin-right: 50px;
+        padding-right: 25px;
+
+        .navbar-brand {
+            font-size: 1.4rem;
+        }
+    }
+
+    #ftp-panels {
+        padding-right: 50px;
+        padding-left: 15px;
+        padding-top: 20px;
+    }
+
+    .ftp-sideBar {
+        section {
+            padding-bottom:20px;
+        }
+    }
+
+    .ftp-summary {
+        padding-right: 20px;
+
+        .ftp-left {
+            width: 80%;
+        }
+
+        .ftp-right {
+            width: 15%;
+            text-align: right;
+        }
+    }
+
+    .ftp-pager {
+        width: 100%;
+
+        select {
+            width: auto;
+            display:inline-block;
+        }
+    }
+
+    #individuals-panel {
+        > section {
+            padding-bottom: 25px;
+        }
+    }
+
+    .ftp-card {
+        height:40px;
+
+        .col-md-2 {
+            padding-right: 0px;
+        }
+
+        img {
+            height: 36px;
+        }
+    }
+
+    .ftp-children {
+        padding-top: 10px;
+        padding-left: 20px;
+    }
 }

@@ -1,20 +1,35 @@
-﻿<div>
-    <div class="ftpLabel" data-bind="text: resx.tree"></div>
-    <div data-bind="visible: trees().length > 0">
-        <span data-bind="text: treeName, visible: trees().length == 1"></span>
-        <select data-bind="options: trees, optionsText: 'name', optionsValue: 'treeId', value: treeId, valueAllowUnset: true, visible: trees().length > 1"></select>
-    </div>
-    <div class="ftpButtons">
-        <a class="ftpButton" data-bind="click: uploadTree">
-            <i class="fa fa-upload"></i>
-            <span data-bind="text: resx.uploadTree"></span>
-        </a>
-        <a class="ftpButton" data-bind="click: addTree">
-            <i class="fa fa-plus"></i>
-            <span data-bind="text: resx.createTree"></span>
-        </a>
-    </div>
+﻿<div class="btn-group navbar-btn" data-bind="visible: trees().length > 1">
+    <button type="button" class="btn btn-default">
+        <i class="fa fa-sitemap"></i>
+        <span data-bind="text: treeName"></span>
+    </button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" data-bind="foreach: trees">
+        <li data-bind="css: {active: name == $parent.treeName()}">
+            <a href="#" data-bind="click: $parent.changeTree">
+                <span data-bind="text: name"></span>
+            </a>
+        </li>
+    </ul>
 </div>
+
+<a class="btn btn-default navbar-btn" data-bind="visible: trees().length == 1">
+    <i class="fa fa-sitemap"></i>
+    <span data-bind="text: treeName"></span>
+</a>
+
+<a class="btn btn-default navbar-btn" data-bind="click: uploadTree">
+    <i class="fa fa-upload"></i>
+    <span data-bind="text: resx.uploadTree"></span>
+</a>
+
+<a class="btn btn-default navbar-btn" data-bind="click: addTree">
+    <i class="fa fa-plus"></i>
+    <span data-bind="text: resx.createTree"></span>
+</a>
 
 <!-- ko component: {
         name: "editTree",

@@ -49,7 +49,7 @@ IF NOT EXISTS (SELECT * FROM sys.objects
 		(
 			ID				INT				NOT NULL PRIMARY KEY IDENTITY, 
 			TreeID			INT				NOT NULL DEFAULT -1, 
-			RepositoryID	INT				NOT NULL DEFAULT -1, 
+			RepositoryID	INT				NULL, 
 			Author			NVARCHAR(100)	NULL, 
 			Publisher		NVARCHAR(2000)	NULL,
 			Title			NVARCHAR(2000)	NULL

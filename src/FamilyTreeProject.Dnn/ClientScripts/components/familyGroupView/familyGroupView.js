@@ -22,7 +22,6 @@ define("components/familyGroupView/familyGroupView",
 
         self.treeId = params.treeId;
         self.selectedIndividualId = params.selectedIndividualId;
-        self.showEdit = ko.observable(false);
 
         self.individual = ko.observable(individualFactory(null));
 
@@ -31,10 +30,6 @@ define("components/familyGroupView/familyGroupView",
 
         self.facts = ko.observableArray([]);
         self.families = ko.observableArray([]);
-
-        self.editIndividual = function () {
-            self.showEdit(true);
-        }
 
         self.getIndividual = function() {
             var params = {

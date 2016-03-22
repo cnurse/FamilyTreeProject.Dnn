@@ -14,7 +14,7 @@
  */
 define("components/individualDetail/individualDetail",
         ["jquery", "knockout", "config", "individualViewModel", "text!./individualDetail.html"],
-        function ($, ko, config, individualViewModel,htmlString) {
+        function ($, ko, config, individualViewModel, htmlString) {
 
     // Return component definition
     return { viewModel: individualViewModel, template: htmlString };

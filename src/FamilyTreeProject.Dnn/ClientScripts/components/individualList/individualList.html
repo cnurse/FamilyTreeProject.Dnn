@@ -1,15 +1,16 @@
-﻿<div class="ftpPanel" id="individuals-panel">
-    <div id="individuals-listView" class="ftpSubPanel">
-        <div class="ftpSearchPanel">
-            <input type="text" class="ftpSearchBox" data-bind="value: searchText, valueUpdate: 'afterkeydown', attr: { 'placeholder': resx.findIndividual}" />
-            <a class="ftpButton right" data-bind="click: addIndividual">
+﻿<section id="individuals-panel">
+    <section class="row">
+        <section class="col-md-8">
+            <input class="form-control" type="text" data-bind="value: searchText, valueUpdate: 'afterkeydown', attr: { 'placeholder': resx.findIndividual}" />
+        </section>
+        <section class="col-md-4">
+            <a class="btn btn-default ftp-right" data-bind="click: addIndividual">
                 <i class="fa fa-plus"></i>
                 <span data-bind="text: resx.addIndividual"></span>
             </a>
-
-        </div>
-    </div>
-    <table class="ftpTable">
+        </section>
+    </section>
+    <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th data-bind="text: resx.name"></th>
@@ -47,7 +48,7 @@
             </tr>
         </tfoot>
     </table>
-</div>
+</section>
 <!-- ko component: {
     name: "editIndividual",
     params: {

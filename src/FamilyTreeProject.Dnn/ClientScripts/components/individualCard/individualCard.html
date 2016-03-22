@@ -1,23 +1,21 @@
 ﻿<!-- ko if: !isNull() -->
-    <div class="ftpCard" data-bind="click: selectIndividual">
-        <div>
-            <div class="ftpImage">
-                <img data-bind="attr: {src: imageUrl}"/>
-            </div>
-            <div class="ftpTitle" data-bind="text: name"></div>
-            <div>
-                <div class="ftpNormal" data-bind="text: lived"></div>
-            </div>
+    <div class="row ftp-card" data-bind="click: selectIndividual">
+        <div class="col-md-2">
+            <img data-bind="attr: {src: imageUrl}" />
+        </div>
+        <div class="col-md-10">
+            <div data-bind="text: name"></div>
+            <div data-bind="text: lived"></div>
         </div>
     </div>
 <!-- /ko -->
 <!-- ko if: isNull() -->
-    <div class="ftpCard ftpAdd">
+    <div>
         <div>
-            <div class="ftpImage">
+            <div>
                 <img data-bind="attr: {src: imageUrl}" />
             </div>
-            <div class="ftpTitle" >
+            <div>
                 <i class="fa fa-plus-circle"></i>
                 <span data-bind="text: addParent"></span>
             </div>

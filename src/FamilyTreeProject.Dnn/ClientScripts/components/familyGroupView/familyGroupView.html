@@ -1,74 +1,54 @@
-<div class="ftpPanel" id="familyGroupView-panel">
-    <div class="ftpSubPanelLeft">
-        <div>
-            <a class="ftpIcon" data-bind="attr: {title: resx.editIndividual}, click: editIndividual"><i class="fa fa-pencil"></i></a>
-        </div>
+<section id="familyGroupView-panel" class="row">
+    <section  class="col-md-8 col-xs-12">
         <!-- ko component: {
-            name: "individualDetail",
-            params: {
-                individual: individual,
-                refresh: getIndividual
-            }
-        } -->
-        <!-- /ko -->
-        <!-- ko component: {
-            name: "editIndividual",
-            params: {
-                individual: individual,
-                isVisible: showEdit,
-                dialogTitle: resx.editIndividual,
-                message: resx.editIndividualMessage,
-                onSuccess: getIndividual
-            }
-        } -->
-        <!-- /ko -->
-    </div>
-    <div class="ftpSubPanelRight">
-        <div class="ftpHeading">
-            <span data-bind="text:resx.family"></span>
-        </div>
-        <div class="ftpSubHeading">
-            <span data-bind="text:resx.parents"></span>
-        </div>
-        <!-- ko component: {
-            name: "individualCard",
-            params: {
-                individual: father,
-                onSelected: viewIndividual
-            }
-        } -->
-        <!-- /ko -->
-        <!-- ko component: {
-            name: "individualCard",
-            params: {
-                individual: mother,
-                onSelected: viewIndividual
-            }
-        } -->
-        <!-- /ko -->
-        <div data-bind="foreach: families">
-            <div class="ftpSubHeading">
-                <span data-bind="text : $parent.resx.spouse, visible : children().length == 0"></span>
-                <span data-bind="text : $parent.resx.spouseChildren, visible : children().length > 0"></span>
-            </div>
-            <!-- ko component: {
-                name: "individualCard",
+                name: "individualDetail",
                 params: {
-                    individual: spouse,
-                    onSelected: $parent.viewIndividual
+                    individual: individual,
+                    refresh: getIndividual
                 }
             } -->
-            <!-- /ko -->
-            <div class="ftpChildren" data-bind="foreach: children">
-                <!-- ko component: {
+        <!-- /ko -->
+    </section>
+    <section class="col-md-4 col-xs-12 ftp-sideBar">
+        <h2 data-bind="text:resx.family"></h2>
+        <h3 data-bind="text:resx.parents"></h3>
+        <!-- ko component: {
+                name: "individualCard",
+                params: {
+                    individual: father,
+                    onSelected: viewIndividual
+                }
+            } -->
+        <!-- /ko -->
+        <!-- ko component: {
+                name: "individualCard",
+                params: {
+                    individual: mother,
+                    onSelected: viewIndividual
+                }
+            } -->
+        <!-- /ko -->
+        <div data-bind="foreach: families">
+            <h3 data-bind="text : $parent.resx.spouse, visible : children().length == 0"></h3>
+            <h3 data-bind="text : $parent.resx.spouseChildren, visible : children().length > 0"></h3>
+            <!-- ko component: {
                     name: "individualCard",
                     params: {
-                        individual: $rawData,
-                        onSelected: $parents[1].viewIndividual
+                        individual: spouse,
+                        onSelected: $parent.viewIndividual
                     }
                 } -->
+            <!-- /ko -->
+            <div class="ftp-children" data-bind="foreach: children">
+                <!-- ko component: {
+                name: "individualCard",
+                params: {
+                    individual: $rawData,
+                    onSelected: $parents[1].viewIndividual
+                }
+            } -->
                 <!-- /ko -->
             </div>
         </div>
-    </div>
-</div>
+    </section>
+</section>

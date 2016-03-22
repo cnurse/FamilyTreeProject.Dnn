@@ -43,7 +43,6 @@ define("components/treeView/treeView",
         self.familyCount = ko.observable(0);
         self.factCount = ko.observable(0);
 
-        self.showUploadButton = ko.observable(false);
         self.showEdit = ko.observable(false);
         self.showUpload = ko.observable(false);
 
@@ -51,16 +50,8 @@ define("components/treeView/treeView",
             self.getTree();
         });
 
-        self.disableButton = function () {
-            self.showUploadButton(false);
-        }
-
         self.editTree = function () {
             self.showEdit(true);
-        }
-
-        self.enableButton = function() {
-            self.showUploadButton(true);
         }
 
         self.getTree = function () {
